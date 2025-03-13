@@ -22,7 +22,13 @@ fun HomeScreen() {
         bottomBar = { BottomNavBar(navController) }, // ✅ Bottom Navigation Bar
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Handle FAB Action */ },
+                onClick = {
+                    navController.navigate(BottomNavItem.Chatbot.route) {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true } // ✅ Avoids multiple instances
+                        launchSingleTop = true // ✅ Ensures only one instance of Chatbot
+                        restoreState = true
+                    }
+                },
                 modifier = Modifier.navigationBarsPadding() // ✅ Prevents overlap
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")

@@ -29,5 +29,9 @@ fun LoginScreen(navController: NavHostController) {
             Text("Next")
             Log.d("Navigation", "Navigating to Login Screen") // ✅
         }
+        Button(onClick = { navController.navigate(Route.Signup.route) }) {
+            Text("Signup")
+
+        }
     }
 }

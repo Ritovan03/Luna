@@ -3,6 +3,7 @@ package com.example.mentalhealthapp.presentation.home
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -12,4 +13,5 @@ sealed class BottomNavItem(val route: String, val title: String, val icon: Image
     object Tools : BottomNavItem("tools", "Tools", Icons.Default.Build)
     object Community : BottomNavItem("community", "Community", Icons.Default.Face)
     object Profile : BottomNavItem("profile", "Profile", Icons.Default.Person)
+    object Chatbot : BottomNavItem("chatbot", "Chatbot", Icons.Default.Favorite)
 }

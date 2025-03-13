@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,6 +29,14 @@ fun HomeNavGraph(navController: NavHostController) {
         composable(BottomNavItem.Tools.route) { ToolsScreen(navController) }
         composable(BottomNavItem.Community.route) { CommunityScreen(navController) }
         composable(BottomNavItem.Profile.route) { ProfileScreen(navController) }
+        composable(BottomNavItem.Chatbot.route) { ChatbotScreen(navController) }
+    }
+}
+
+@Composable
+fun ChatbotScreen(navController: NavHostController) {
+    Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
+        Text("Chatbot", Modifier.fillMaxSize())
     }
 }
 
@@ -83,31 +92,7 @@ fun CommunityScreen(navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeContentScreen(navController: NavHostController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Home") },
-                navigationIcon = {
-                    IconButton(onClick = { /* Open Drawer */ }) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /* Search Action */ }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
-                    }
-                }
-            )
-        }
-    ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
-            Text("Home Screen Content", Modifier.fillMaxSize())
-        }
-    }
-}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
