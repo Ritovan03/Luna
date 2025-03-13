@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mentalhealthapp.presentation.Navigation.Navigation
+import androidx.navigation.compose.rememberNavController
+import com.example.mentalhealthapp.presentation.Navigation.NavGraph
+// import com.example.mentalhealthapp.presentation.Navigation.Navigation
 import com.example.mentalhealthapp.presentation.Navigation.Route
 import com.example.mentalhealthapp.presentation.auth.AuthCard
 import com.example.mentalhealthapp.presentation.auth.AuthCard
@@ -28,11 +30,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MentalHealthAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding)){
-                        Navigation(Route.AuthRoute.route)
-                    }
-                }
+                val navController = rememberNavController()
+                val startDestination = Route.Splash.route
+                NavGraph(navController = navController, startDestination = startDestination)
+
             }
         }
     }

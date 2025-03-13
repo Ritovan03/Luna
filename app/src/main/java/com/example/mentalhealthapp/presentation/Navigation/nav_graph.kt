@@ -37,18 +37,18 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen7
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen8
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
 
-@Composable
-fun Navigation(startDestination : String){
-
-    val navController = rememberNavController()
-
-    NavHost(navController = navController,startDestination = startDestination){
-       composable(route = Route.AuthRoute.route){
-             val authViewModel : AuthViewModel = hiltViewModel()
-             AuthCard(viewModel = authViewModel)
-       }
-    }
-}
+//@Composable
+//fun Navigation(startDestination : String){
+//
+//    val navController = rememberNavController()
+//
+//    NavHost(navController = navController,startDestination = startDestination){
+//       composable(route = Route.AuthRoute.route){
+//             val authViewModel : AuthViewModel = hiltViewModel()
+//             AuthCard(viewModel = authViewModel)
+//       }
+//    }
+//}
 
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: String) {
@@ -83,7 +83,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Quiz14.route) { QuizScreen14(navController) }
         composable(Route.Quiz15.route) { QuizScreen15(navController) }
 
-        composable(Route.Home.route) { HomeScreen(navController) }
+        composable(Route.Home.route) { HomeScreen() }
     }
 }
 
