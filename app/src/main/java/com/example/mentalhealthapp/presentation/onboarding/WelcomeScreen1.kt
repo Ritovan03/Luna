@@ -1,5 +1,7 @@
 package com.example.mentalhealthapp.presentation.onboarding
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +18,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -60,12 +61,12 @@ fun WelcomeScreen1(navController: NavHostController){
         Spacer(modifier = Modifier.height(40.dp))
 
         // 🟤 App Logo
-        Icon(
-            painter = painterResource(id = R.drawable.logo), // Replace with actual icon
+        Image(
+            painter = painterResource(id = R.drawable.iconlogo),
             contentDescription = "App Logo",
-            //tint = Color(0xFF6D4C41), // Dark brown color
-            modifier = Modifier.size(50.dp)
+            modifier = Modifier.size(100.dp)
         )
+
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -100,16 +101,16 @@ fun WelcomeScreen1(navController: NavHostController){
             progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(300.dp)
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         // 🟤 Get Started Button
         Button(
             onClick = { navController.navigate(Route.Welcome2.route) },
             shape = RoundedCornerShape(24.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6D4C41)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF507780)),
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
             Text(text = "Get Started", fontSize = 18.sp, color = Color.White)
@@ -119,12 +120,24 @@ fun WelcomeScreen1(navController: NavHostController){
         Spacer(modifier = Modifier.height(16.dp))
 
         // 🔸 Sign In Link
-        Row {
-            Text(text = "Already have an account?", color = Color.Gray, fontSize = 14.sp)
-            Spacer(modifier = Modifier.width(4.dp))
-            TextButton(onClick = { navController.navigate(Route.Login.route) }) {
-                Text(text = "Sign In.", color = Color(0xFFD2691E), fontWeight = FontWeight.Bold)
-            }
+        Row(
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Already have an account? ",
+                color = Color.Gray,
+                fontSize = 14.sp,
+                maxLines = 1
+            )
+
+            Text(
+                text = "Sign In.",
+                color = Color(0xFFD2691E),
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.clickable { navController.navigate(Route.Login.route) }
+            )
         }
+
+
     }
 }
