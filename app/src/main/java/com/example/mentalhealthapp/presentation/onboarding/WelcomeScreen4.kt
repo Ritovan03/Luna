@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp.presentation.onboarding
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -53,11 +54,12 @@ fun WelcomeScreen4(navController: NavHostController){
 
             // Top Illustration
             Image(
-                painter = painterResource(id = R.drawable.wc3),
+                painter = painterResource(id = R.drawable.wc4),
                 contentDescription = "Illustration",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f) // Adjusts size proportionally
+                    .size(200.dp)
+                    .weight(2f) // Adjusts size proportionally
             )
 
             // Bottom Content Section
@@ -90,11 +92,11 @@ fun WelcomeScreen4(navController: NavHostController){
                 // Main Text
                 Text(
                     text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(color = Color(0xFFED7E1C), fontWeight = FontWeight.Bold)) {
-                            append("Intelligent ")
+                        withStyle(style = SpanStyle(color = Color(0xFF736B66), fontWeight = FontWeight.Bold)) {
+                            append("Mental ")
                         }
                         withStyle(style = SpanStyle(color = Color(0xFF57341C), fontWeight = FontWeight.Bold)) {
-                            append("Mood Tracking & Emotion Insights")
+                            append("Health Journaling & AI Therapy Chatbot")
                         }
                     },
                     fontSize = 26.sp,
@@ -125,7 +127,8 @@ fun WelcomeScreen4(navController: NavHostController){
 
                 // Navigation Button
                 Button(
-                    onClick = { navController.navigate(Route.Welcome4.route) },
+                    onClick = { navController.navigate(Route.Welcome5.route)
+                              Log.d("WelcomeScreen4", "Button clicked, ")},
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF57341C)), // Brown color
                     shape = CircleShape,
                     modifier = Modifier.size(60.dp),
