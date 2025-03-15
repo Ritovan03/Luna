@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -57,8 +58,9 @@ fun WelcomeScreen5(navController: NavHostController){
                 painter = painterResource(id = R.drawable.wc5),
                 contentDescription = "Illustration",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f) // Adjusts size proportionally
+                    .fillMaxSize()
+                    .weight(1f),
+                contentScale = ContentScale.Crop// Adjusts size proportionally
             )
 
             // Bottom Content Section
@@ -92,7 +94,7 @@ fun WelcomeScreen5(navController: NavHostController){
                 Text(
                     text = buildAnnotatedString {
                         withStyle(style = SpanStyle(color = Color(0xFF57341C), fontWeight = FontWeight.Bold)) {
-                            append("Build")
+                            append("Build ")
                         }
                         withStyle(style = SpanStyle(color = Color(0xFFFFBD1A), fontWeight = FontWeight.Bold)) {
                             append("Sensory Resilience")

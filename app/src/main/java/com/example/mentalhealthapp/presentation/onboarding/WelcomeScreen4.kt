@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -57,9 +58,9 @@ fun WelcomeScreen4(navController: NavHostController){
                 painter = painterResource(id = R.drawable.wc4),
                 contentDescription = "Illustration",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .size(200.dp)
-                    .weight(2f) // Adjusts size proportionally
+                    .fillMaxSize()
+                    .weight(1f),
+                contentScale = ContentScale.Crop// Adjusts size proportionally
             )
 
             // Bottom Content Section

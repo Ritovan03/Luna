@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -53,13 +54,17 @@ fun WelcomeScreen6(navController: NavHostController){
             Spacer(modifier = Modifier.height(20.dp))
 
             // Top Illustration
-            Image(
-                painter = painterResource(id = R.drawable.wc6),
-                contentDescription = "Illustration",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f) // Adjusts size proportionally
-            )
+                Image(
+                    painter = painterResource(id = R.drawable.wc6),
+                    contentDescription = "Illustration",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
+                    contentScale = ContentScale.Crop// Adjusts size proportionally
+                )
+
+
+
 
             // Bottom Content Section
             Column(
@@ -92,9 +97,9 @@ fun WelcomeScreen6(navController: NavHostController){
                 Text(
                     text = buildAnnotatedString {
                         withStyle(style = SpanStyle(color = Color(0xFF57341C), fontWeight = FontWeight.Bold)) {
-                            append("Loving & Supportive")
+                            append("Loving & Supportive ")
                         }
-                        withStyle(style = SpanStyle(color = Color(0xFFFFBD1A), fontWeight = FontWeight.Bold)) {
+                        withStyle(style = SpanStyle(color = Color(0xFFA694F5), fontWeight = FontWeight.Bold)) {
                             append("Community")
                         }
                     },
