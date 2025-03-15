@@ -1,6 +1,5 @@
 package com.example.mentalhealthapp.domain.Usecases
 
-import com.example.mentalhealthapp.data.repository.AuthRepoImp
 import com.example.mentalhealthapp.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseUser
 

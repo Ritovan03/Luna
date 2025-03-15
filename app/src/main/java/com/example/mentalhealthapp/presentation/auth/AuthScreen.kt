@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AuthCard(modifier: Modifier = Modifier,
-             viewModel: AuthViewModel) {
+             viewModel: AuthViewModel){
 
     var isSignIn by remember { mutableStateOf(true) }
 
@@ -82,7 +82,7 @@ fun AuthCard(modifier: Modifier = Modifier,
                 OutlinedTextField(
                     value = formState.email,
                     onValueChange = { viewModel.updateEmail(it) },
-                    label = { Text("Email") },
+                    label = { Text("username") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(

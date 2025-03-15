@@ -39,8 +39,6 @@ class AuthViewModel @Inject constructor(
         _uiState.update { it.copy(username = username) }
     }
 
-
-
     fun signIn(email: String, password: String) = viewModelScope.launch {
         _authState.value = AuthState.Loading
         val result = signInUseCase(email, password)

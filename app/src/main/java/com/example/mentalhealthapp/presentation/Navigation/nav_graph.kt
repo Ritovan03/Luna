@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.presentation.auth.AuthCard
 import com.example.mentalhealthapp.presentation.auth.AuthViewModel
+import com.example.mentalhealthapp.presentation.auth.LoginScreen
+import com.example.mentalhealthapp.presentation.auth.SignupScreen
 
 @Composable
 fun Navigation(startDestination : String){
@@ -17,7 +19,7 @@ fun Navigation(startDestination : String){
     NavHost(navController = navController,startDestination = startDestination){
        composable(route = Route.AuthRoute.route){
              val authViewModel : AuthViewModel = hiltViewModel()
-             AuthCard(viewModel = authViewModel)
+             LoginScreen(authViewModel)
        }
     }
 }
