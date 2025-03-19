@@ -89,4 +89,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
+    implementation("androidx.compose.material:material:1.5.4") // Latest stable Material 2
+
+
+
 }
