@@ -92,4 +92,8 @@ dependencies {
     implementation(libs.lottie.compose)
 
 
+    implementation("androidx.compose.material:material:1.5.4") // Latest stable Material 2
+
+
+
 }
