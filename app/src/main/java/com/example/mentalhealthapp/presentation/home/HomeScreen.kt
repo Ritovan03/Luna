@@ -8,6 +8,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.R
 
@@ -47,4 +48,10 @@ fun HomeScreen() {
             HomeNavGraph(navController)
         }
     }
+}
+
+@Composable
+@Preview
+fun homescreenpreview() {
+    HomeScreen()
 }

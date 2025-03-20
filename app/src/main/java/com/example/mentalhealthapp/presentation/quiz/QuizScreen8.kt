@@ -24,7 +24,7 @@ fun QuizScreen8(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text("Quiz 8", style = MaterialTheme.typography.headlineMedium)
-        Button(onClick = { navController.navigate(Route.Quiz9.route) }) {
+        Button(onClick = { navController.navigate(Route.Home.route) }) {
             Text("Next")
 
         }
