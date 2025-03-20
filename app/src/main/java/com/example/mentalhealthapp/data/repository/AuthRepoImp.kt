@@ -9,12 +9,15 @@ class AuthRepoImp(private val authDataSource : FireBaseAuthDataSource) : AuthRep
         get() = authDataSource.getCurrentUser()
 
     override suspend fun signIn(email: String, password: String): Result<FirebaseUser> {
-
         return authDataSource.signIn(email, password)
     }
 
     override suspend fun signUp(email: String, password: String): Result<FirebaseUser> {
         return authDataSource.signUp(email, password)
+    }
+
+    override suspend fun firebaseSignInWithGoogle(idToken: String): FirebaseUser? {
+        return authDataSource.firebaseSignInWithGoogle(idToken)
     }
 
     override fun signOut() {

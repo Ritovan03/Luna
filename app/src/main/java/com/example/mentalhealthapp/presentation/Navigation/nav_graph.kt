@@ -65,7 +65,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Login.route) { LoginScreen(navController) }
         composable(Route.Signup.route) {
             val authViewModel : AuthViewModel = hiltViewModel()
-            SignupScreen(authViewModel)
+            LoginScreen(authViewModel)
         }
         composable(Route.ForgotPassword.route) { ForgotPasswordScreen() }
         composable(Route.ResetPassword.route) { ResetPasswordScreen(navController) }

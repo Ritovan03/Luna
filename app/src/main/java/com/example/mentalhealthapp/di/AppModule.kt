@@ -3,6 +3,7 @@ package com.example.mentalhealthapp.di
 import com.example.mentalhealthapp.data.datasource.FireBaseAuthDataSource
 import com.example.mentalhealthapp.data.repository.AuthRepoImp
 import com.example.mentalhealthapp.domain.Usecases.SignInUseCase
+import com.example.mentalhealthapp.domain.Usecases.SignInWithGoogleUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignUpUseCase
 import com.example.mentalhealthapp.domain.repository.AuthRepository
 import com.google.firebase.Firebase
@@ -41,5 +42,11 @@ object AppModule {
     @Singleton
     fun provideSignUpUseCase(repository: AuthRepository): SignUpUseCase {
         return SignUpUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGoogleSignInUseCase(repository: AuthRepository) : SignInWithGoogleUseCase{
+        return  SignInWithGoogleUseCase(repository)
     }
 }

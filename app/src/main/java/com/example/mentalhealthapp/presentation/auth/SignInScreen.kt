@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,10 +27,14 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.BuildCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.ui.theme.UrbanistFont
+import com.google.firebase.BuildConfig
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 class WaveShape : Shape {
     override fun createOutline(
@@ -58,6 +63,9 @@ fun LoginScreen(viewModel: AuthViewModel) {
     val formState by viewModel.uiState.collectAsState()
     val authState by viewModel.authState.collectAsState()
     var passwordVisible by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val googleSignInClient = GoogleSignInClient(context,com.example.mentalhealthapp.BuildConfig.WEB_CLIENT_ID)
+    val coroutineScope = rememberCoroutineScope()
 
     when(authState){
         is AuthState.Initial -> {
@@ -72,7 +80,7 @@ fun LoginScreen(viewModel: AuthViewModel) {
         is AuthState.Success -> {
             val user = (authState as AuthState.Success).user
             Log.v("TAGY","signed in as ${user}")
-            //Navigate the user
+            //Navigate the user after success
         }
     }
 
@@ -241,7 +249,9 @@ fun LoginScreen(viewModel: AuthViewModel) {
                     icon = R.drawable.google_icon,
                     contentDescription = "Google",
                     onClick = {
-                        //ViewModel.googleAuth()
+                      coroutineScope.launch {
+                          googleSignInClient.signIn()
+                      }
                     }
                 )
                 Spacer(modifier = Modifier.width(16.dp))

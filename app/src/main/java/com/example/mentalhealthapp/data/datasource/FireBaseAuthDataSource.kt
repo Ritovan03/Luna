@@ -36,16 +36,16 @@ class FireBaseAuthDataSource {
         }
     }
 
-    suspend fun signInWithGoogle(idToken: String): FirebaseUser? {
+    suspend fun firebaseSignInWithGoogle(idToken: String): FirebaseUser? {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
         return try {
-            val credential = GoogleAuthProvider.getCredential(idToken, null)
             val result = auth.signInWithCredential(credential).await()
             result.user
         } catch (e: Exception) {
+            e.printStackTrace()
             null
         }
     }
-
 
     fun signOut() {
         auth.signOut()

@@ -14,3 +14,11 @@ class SignUpUseCase(private val repository: AuthRepository) {
         return repository.signUp(email, password)
     }
 }
+
+class SignInWithGoogleUseCase(
+    private val repository: AuthRepository
+) {
+    suspend operator fun invoke(idToken: String): FirebaseUser? {
+        return repository.firebaseSignInWithGoogle(idToken)
+    }
+}
