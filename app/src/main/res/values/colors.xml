@@ -11,4 +11,6 @@
     <color name="HomeScreen_primary_variant_scaffold_color">#ff9EA8E4</color>
     <color name="offwhite_screen_color">#FFEBE5E1</color>
     <color name="blue_200">#FF539DF3</color>
+    <color name="orange_Accent_color">#FFED7E1C</color>
+    <color name="brown_color">#FF4F3422</color>
 </resources>

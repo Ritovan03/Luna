@@ -91,7 +91,7 @@ dependencies {
     //lottie
     implementation(libs.lottie.compose)
 
-
+    implementation ("androidx.compose.material:material-icons-extended:1.6.0")
     implementation("androidx.compose.material:material:1.5.4") // Latest stable Material 2
 
 
