@@ -6,11 +6,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.R
+import com.example.mentalhealthapp.presentation.top_bar.ChatbotTopBar
+import com.example.mentalhealthapp.presentation.top_bar.CommunityTopBar
+import com.example.mentalhealthapp.presentation.top_bar.HomeTopBar
+import com.example.mentalhealthapp.presentation.top_bar.ProfileTopBar
+import com.example.mentalhealthapp.presentation.top_bar.ToolsTopBar
+
 
 @Composable
 fun HomeScreen() {
@@ -21,14 +29,17 @@ fun HomeScreen() {
             .fillMaxSize(),
 
         topBar = {
-            DailyStreakTopBar(
-                date = "Sat, 23 February 2025",
-                username = "Shyam",
-                xp = 90,
-                mood = "Happy",
-                streakDays = 3,
-                quoteOfTheDay = "\"I want to meet your madre, give respect to your padre\""
-            )
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+
+            when (currentRoute) {
+                BottomNavItem.Home.route -> HomeTopBar()
+                BottomNavItem.Tools.route -> ToolsTopBar()
+                BottomNavItem.Community.route -> CommunityTopBar()
+                BottomNavItem.Profile.route -> ProfileTopBar()
+                BottomNavItem.Chatbot.route -> ChatbotTopBar()
+                else -> HomeTopBar() // Default case
+            }
         },
 
         floatingActionButton = {
@@ -43,7 +54,7 @@ fun HomeScreen() {
         floatingActionButtonPosition = FabPosition.Center,
         backgroundColor = colorResource(R.color.offwhite_screen_color),
 
-    ) { paddingValues ->
+        ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             HomeNavGraph(navController)
         }
