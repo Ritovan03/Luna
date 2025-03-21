@@ -186,26 +186,29 @@ fun FloatingActionButton(navController: NavController) {
         ),
         label = "FabScale"
     )
-
     Box(
         Modifier
             .size(72.dp)
             .scale(scale)
             .clip(CircleShape)
-            .clickable {
-                navController.navigate(BottomNavItem.Chatbot.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
+            .clickable(
+                interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                indication = null, // Removes ripple effect
+                onClick = {
+                    navController.navigate(BottomNavItem.Chatbot.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                    launchSingleTop = true
-                    restoreState = true
                 }
-            }
+            )
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_chatbot),
             modifier = Modifier.matchParentSize(),
-            contentDescription = "Chatbot",
+            contentDescription = "Chatbot"
         )
     }
 }

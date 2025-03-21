@@ -37,4 +37,5 @@ sealed class Route(
     object Quiz15 : Route("quiz15")
 
     object Home : Route("home")
+    object Haven : Route("haven")
 }
