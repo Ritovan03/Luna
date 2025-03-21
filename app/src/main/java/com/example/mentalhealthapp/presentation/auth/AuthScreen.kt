@@ -209,7 +209,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
             AuthState.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
-                    color = colorResource(R.color.brown_color)
+                    color = colorResource(R.color.purple_800)
                 )
             }
             is AuthState.Success -> {
@@ -246,7 +246,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
                 Text(
                     text = "Username",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = colorResource(R.color.brown_color),
+                    color = colorResource(R.color.purple_800),
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(bottom = 8.dp)
@@ -274,7 +274,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
                     ),
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = Color.Black,
-                        focusedBorderColor = colorResource(R.color.brown_color)
+                        focusedBorderColor = colorResource(R.color.purple_800)
                     )
                 )
             }
@@ -283,7 +283,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
             Text(
                 text = "Email Address",
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(R.color.brown_color),
+                color = colorResource(R.color.purple_800),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(bottom = 8.dp)
@@ -311,7 +311,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
                 ),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = colorResource(R.color.brown_color)
+                    focusedBorderColor = colorResource(R.color.purple_800)
                 )
             )
 
@@ -319,7 +319,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
             Text(
                 text = "Password",
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(R.color.brown_color),
+                color = colorResource(R.color.purple_800),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(bottom = 8.dp)
@@ -360,7 +360,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
                 ),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = colorResource(R.color.brown_color)
+                    focusedBorderColor = colorResource(R.color.purple_800)
                 )
             )
 
@@ -378,7 +378,7 @@ fun AuthScreen(viewModel: AuthViewModel) {
                     .height(56.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.brown_color)
+                    containerColor = colorResource(R.color.purple_800)
                 )
             ) {
                 Text(
@@ -491,7 +491,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
                 Text(
                     text = "Username",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = colorResource(R.color.brown_color),
+                    color = colorResource(R.color.purple_800),
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(bottom = 8.dp)
@@ -519,7 +519,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
                     ),
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = Color.Black,
-                        focusedBorderColor = colorResource(R.color.brown_color)
+                        focusedBorderColor = colorResource(R.color.purple_800)
                     )
                 )
             }
@@ -528,7 +528,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
             Text(
                 text = "Email Address",
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(R.color.brown_color),
+                color = colorResource(R.color.purple_800),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(bottom = 8.dp)
@@ -556,7 +556,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
                 ),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = colorResource(R.color.brown_color)
+                    focusedBorderColor = colorResource(R.color.purple_800)
                 )
             )
 
@@ -564,7 +564,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
             Text(
                 text = "Password",
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(R.color.brown_color),
+                color = colorResource(R.color.purple_800),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(bottom = 8.dp)
@@ -605,7 +605,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
                 ),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = colorResource(R.color.brown_color)
+                    focusedBorderColor = colorResource(R.color.purple_800)
                 )
             )
 
