@@ -617,7 +617,7 @@ private fun AuthScreenPreviewContent(isSignInScreen: Boolean) {
                     .height(56.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.brown_color)
+                    containerColor = colorResource(R.color.purple_800)
                 )
             ) {
                 Text(
