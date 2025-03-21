@@ -1,8 +1,19 @@
 package com.example.mentalhealthapp.presentation.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,13 +27,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,12 +53,12 @@ fun BottomNavigationBar(navController: NavController) {
         mutableStateOf("Home")
     }
 
-
-
     BottomAppBar(
         cutoutShape = CircleShape,
         contentColor = colorResource(id = R.color.black),
         backgroundColor = colorResource(id = R.color.offwhite_screen_color),
+        elevation = 8.dp,
+        modifier = Modifier.height(70.dp) // Increased height of the bottom bar
     ) {
         bottomMenuItemsList.forEachIndexed { index, bottomMenuItem ->
             if (index == 2) {
@@ -56,8 +70,22 @@ fun BottomNavigationBar(navController: NavController) {
                     modifier = Modifier.padding(horizontal = 0.dp) // Keep minimal space for FAB
                 )
             }
+
+            val isSelected = selectedItem == bottomMenuItem.label
+            val scale by animateFloatAsState(
+                targetValue = if (isSelected) 1.2f else 1.0f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                ),
+                label = "IconScale"
+            )
+
+            val iconColor = if (isSelected)
+                colorResource(id = R.color.blue_200) else Color.Black
+
             BottomNavigationItem(
-                selected = (selectedItem == bottomMenuItem.label),
+                selected = isSelected,
                 onClick = {
                     selectedItem = bottomMenuItem.label
                     navController.navigate(bottomMenuItem.route) {
@@ -69,28 +97,49 @@ fun BottomNavigationBar(navController: NavController) {
                     }
                 },
                 icon = {
-                    Icon(
-                        painter = bottomMenuItem.icon,
-                        contentDescription = bottomMenuItem.label,
-                        modifier = Modifier
-                            .height(20.dp),
-                        tint = if (selectedItem == bottomMenuItem.label)
-                            colorResource(id = R.color.blue_200) else Color.Black,
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Animate indicator
+                        AnimatedVisibility(
+                            visible = isSelected,
+                            enter = fadeIn() + expandVertically(),
+                            exit = fadeOut() + shrinkVertically()
+                        ) {
+
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        // Animated icon
+                        Icon(
+                            painter = bottomMenuItem.icon,
+                            contentDescription = bottomMenuItem.label,
+                            modifier = Modifier
+                                .scale(scale)
+                                .size(24.dp),
+                            tint = iconColor
+                        )
+                    }
                 },
                 label = {
-                    Text(
-                        text = bottomMenuItem.label,
-                        modifier = Modifier.padding(top = 20.dp),
-                        color = if (selectedItem == bottomMenuItem.label)
-                            colorResource(id = R.color.blue_200) else Color.Black,
-                        fontSize = 12.sp
-                    )
+                    AnimatedVisibility(
+                        visible = true,
+                        enter = fadeIn(animationSpec = tween(durationMillis = 300)),
+                        exit = fadeOut(animationSpec = tween(durationMillis = 300))
+                    ) {
+                        Text(
+                            text = bottomMenuItem.label,
+                            modifier = Modifier.padding(top = 2.dp),
+                            color = iconColor,
+                            fontSize = 12.sp,
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                        )
+                    }
                 },
                 alwaysShowLabel = true,
                 enabled = true,
             )
-
         }
     }
 }
@@ -129,9 +178,19 @@ fun prepareBottomMenu(): List<BottomMenuItem> {
 
 @Composable
 fun FloatingActionButton(navController: NavController) {
+    val scale by animateFloatAsState(
+        targetValue = 1.0f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "FabScale"
+    )
+
     Box(
         Modifier
             .size(72.dp)
+            .scale(scale)
             .clip(CircleShape)
             .clickable {
                 navController.navigate(BottomNavItem.Chatbot.route) {
@@ -142,7 +201,6 @@ fun FloatingActionButton(navController: NavController) {
                     restoreState = true
                 }
             }
-
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_chatbot),
