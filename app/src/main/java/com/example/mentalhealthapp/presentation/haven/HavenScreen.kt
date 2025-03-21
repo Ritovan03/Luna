@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -49,66 +50,15 @@ import com.example.mentalhealthapp.presentation.home.BottomNavigationBar
 import com.example.mentalhealthapp.presentation.home.FloatingActionButton
 
 
-@Composable
-fun HavenScreen(navController: NavController) {
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(navController)
-        },
-        bottomBar = {
-            BottomNavigationBar(navController)
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center,
-        backgroundColor = colorResource(R.color.offwhite_screen_color),
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            HavenScreenContent()
-        }
-    }
-}
 
 @Composable
-fun HavenScreenContent(modifier: Modifier = Modifier) {
+fun HavenScreen(navController: NavHostController) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = PaddingValues(bottom = 16.dp),
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
     ) {
-        item {
-            // Background image needs to be in a Box to position it properly
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)  // Reduced from 200dp
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.haven_topdesign),
-                    contentDescription = "Haven",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
-                )
-                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.sun))
-                val progress by animateLottieCompositionAsState(
-                    composition,
-                    iterations = LottieConstants.IterateForever
-                )
-                //Lottie Animation
-                LottieAnimation(
-                    composition = composition,
-                    progress = { progress },
-                    modifier = Modifier
-                        .height(240.dp)  // Reduced from 240dp
-                        .padding(top = 45.dp)  // Reduced from 45dp
-                )
-            }
-        }
+
 
         item {
             // Welcome Text - reduced size
@@ -272,12 +222,7 @@ fun ArticleCard(
         }
     }
 }
-@Preview
-@Composable
-fun HavenScreenPreview() {
-    val navController: NavController = rememberNavController()
-    HavenScreen(navController)
-}
+
 
 
 @Composable
