@@ -10,4 +10,12 @@
     <color name="light_green">#E8EDE5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="HomeScreen_primary_scaffold_color">#FFBAC4FF</color>
+    <color name="HomeScreen_primary_variant_scaffold_color">#ff9EA8E4</color>
+    <color name="offwhite_screen_color">#FFEBE5E1</color>
+    <color name="blue_200">#FF539DF3</color>
+    <color name="orange_Accent_color">#FFED7E1C</color>
+    <color name="brown_color">#FF4F3422</color>
+    <color name="purple_800">#ff3F2760</color>
+    <color name="teal_text_color">#FF21564F</color>
 </resources>
