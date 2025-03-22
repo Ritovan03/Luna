@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +8,14 @@ plugins {
     alias(libs.plugins.hilt.android)
     kotlin("kapt")
 }
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+val webClientId: String = localProperties.getProperty("webClientId") ?: ""
+
 
 android {
     namespace = "com.example.mentalhealthapp"
@@ -19,6 +29,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "WEB_CLIENT_ID", "\"$webClientId\"")
     }
 
     buildTypes {
@@ -39,8 +51,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
+
 
 dependencies {
 
@@ -96,4 +110,8 @@ dependencies {
 
 
 
+    //google-signin
+    implementation(libs.androidx.credentials.v150)
+    implementation (libs.androidx.credentials.play.services.auth.vlatestversion)
+    implementation (libs.googleid.vlatestversion)
 }

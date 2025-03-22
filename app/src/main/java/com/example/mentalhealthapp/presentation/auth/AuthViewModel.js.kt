@@ -3,6 +3,7 @@ package com.example.mentalhealthapp.presentation.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentalhealthapp.domain.Usecases.SignInUseCase
+import com.example.mentalhealthapp.domain.Usecases.SignInWithGoogleUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignUpUseCase
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import kotlin.Result
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-    private val signUpUseCase: SignUpUseCase
+    private val signUpUseCase: SignUpUseCase,
+    private val signInWithGoogleUseCase: SignInWithGoogleUseCase
 ) : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
@@ -39,8 +41,6 @@ class AuthViewModel @Inject constructor(
         _uiState.update { it.copy(username = username) }
     }
 
-
-
     fun signIn(email: String, password: String) = viewModelScope.launch {
         _authState.value = AuthState.Loading
         val result = signInUseCase(email, password)
@@ -58,6 +58,22 @@ class AuthViewModel @Inject constructor(
             result.isSuccess -> AuthState.Success(result.getOrNull()!!)
             result.isFailure -> AuthState.Error(result.exceptionOrNull()!!)
             else -> AuthState.Initial
+        }
+    }
+
+
+    fun signInWithGoogle() {
+        viewModelScope.launch {
+            _authState.value = AuthState.Loading
+            val result = signInWithGoogleUseCase()
+            result.fold(
+                onSuccess = { user ->
+                    _authState.value = AuthState.Success(user)
+                },
+                onFailure = { exception ->
+                    _authState.value = AuthState.Error(exception)
+                }
+            )
         }
     }
 

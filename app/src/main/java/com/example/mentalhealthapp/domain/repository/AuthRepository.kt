@@ -9,5 +9,10 @@ interface AuthRepository {
 
     suspend fun signUp(email: String, password: String): Result<FirebaseUser>
 
+    suspend fun getGoogleIdToken(): Result<String>
+
+    suspend fun firebaseSignInWithGoogle(idToken: String): Result<FirebaseUser>
+
+
     fun signOut()
 }

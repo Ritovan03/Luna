@@ -132,7 +132,7 @@ fun WelcomeScreen6(navController: NavHostController){
 
                 // Navigation Button
                 Button(
-                    onClick = { navController.navigate(Route.Signup.route) },
+                    onClick = { navController.navigate(Route.Login.route) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF57341C)), // Brown color
                     shape = CircleShape,
                     modifier = Modifier.size(60.dp),
