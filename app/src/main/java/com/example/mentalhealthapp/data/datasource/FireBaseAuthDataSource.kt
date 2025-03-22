@@ -2,7 +2,6 @@ package com.example.mentalhealthapp.data.datasource
 
 import android.content.Context
 import android.util.Log
-
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -15,11 +14,10 @@ import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.cancellation.CancellationException
 
 
-class FireBaseAuthDataSource(private val context : Context,
-                             private val webClientId: String){
+class FireBaseAuthDataSource(private val webClientId: String){
+
 
     private val auth = Firebase.auth
-    private val credentialManager = CredentialManager.create(context)
 
     fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
@@ -44,9 +42,9 @@ class FireBaseAuthDataSource(private val context : Context,
     }
 
 
-    suspend fun getGoogleIdToken() : Result<String> {
+    suspend fun getGoogleIdToken(context: Context) : Result<String> {
         return try {
-            val credentialResponse = buildCredentialRequest()
+            val credentialResponse = buildCredentialRequest(context)
             val credential = credentialResponse.credential
 
             if (credential is CustomCredential &&
@@ -64,7 +62,8 @@ class FireBaseAuthDataSource(private val context : Context,
         }
     }
 
-    private suspend fun buildCredentialRequest() : androidx.credentials.GetCredentialResponse {
+    private suspend fun buildCredentialRequest(context: Context) : androidx.credentials.GetCredentialResponse {
+         val credentialManager = CredentialManager.create(context)
 
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)

@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp.domain.Usecases
 
+import android.content.Context
 import android.util.Log
 import com.example.mentalhealthapp.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseUser
@@ -17,10 +18,10 @@ class SignUpUseCase(private val repository: AuthRepository) {
 }
 
 class SignInWithGoogleUseCase(
-    private val repository: AuthRepository
+    private val repository: AuthRepository,
 ) {
-    suspend operator fun invoke(): Result<FirebaseUser> {
-        val token = repository.getGoogleIdToken()
+    suspend operator fun invoke(context: Context): Result<FirebaseUser> {
+        val token = repository.getGoogleIdToken(context = context)
         Log.v("TAGY","Got token ${token}")
        return token.fold(
            onSuccess = {

@@ -1,20 +1,18 @@
 package com.example.mentalhealthapp.presentation.auth
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentalhealthapp.domain.Usecases.SignInUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignInWithGoogleUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignUpUseCase
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 import javax.inject.Inject
-import kotlin.Result
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -62,10 +60,10 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    fun signInWithGoogle() {
+    fun signInWithGoogle(context : Context) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
-            val result = signInWithGoogleUseCase()
+            val result = signInWithGoogleUseCase(context)
             result.fold(
                 onSuccess = { user ->
                     _authState.value = AuthState.Success(user)
