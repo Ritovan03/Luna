@@ -1,12 +1,15 @@
 package com.example.mentalhealthapp.presentation.Navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.mentalhealthapp.presentation.auth.AuthViewModel
 import com.example.mentalhealthapp.presentation.auth.ForgotPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.LoginScreen
 import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
+import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
 import com.example.mentalhealthapp.presentation.home.HomeScreen
@@ -48,6 +51,7 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
 
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: String) {
+    val authViewModel : AuthViewModel = hiltViewModel()
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Route.Splash.route) { SplashScreen(navController) }
 
@@ -58,11 +62,12 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Welcome5.route) { WelcomeScreen5(navController) }
         composable(Route.Welcome6.route) { WelcomeScreen6(navController) }
 
-        composable(Route.Login.route) { LoginScreen(navController) }
+        composable(Route.Login.route) {
+            SignInScreen(authViewModel,navController) }
         composable(Route.Signup.route) {
-            val authViewModel : AuthViewModel = hiltViewModel()
-            LoginScreen(authViewModel)
+            SignupScreen(authViewModel)
         }
+
         composable(Route.ForgotPassword.route) { ForgotPasswordScreen() }
         composable(Route.ResetPassword.route) { ResetPasswordScreen(navController) }
 

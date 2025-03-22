@@ -31,6 +31,7 @@ import androidx.core.os.BuildCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
+import com.example.mentalhealthapp.presentation.Navigation.Route
 import com.example.mentalhealthapp.ui.theme.UrbanistFont
 import com.google.firebase.BuildConfig
 import kotlinx.coroutines.coroutineScope
@@ -58,29 +59,18 @@ class WaveShape : Shape {
 }
 
 @Composable
-fun LoginScreen(viewModel: AuthViewModel) {
+fun SignInScreen(viewModel: AuthViewModel,navController: NavHostController) {
 
     val formState by viewModel.uiState.collectAsState()
     val authState by viewModel.authState.collectAsState()
     var passwordVisible by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-    val googleSignInClient = GoogleSignInClient(context,com.example.mentalhealthapp.BuildConfig.WEB_CLIENT_ID)
     val coroutineScope = rememberCoroutineScope()
 
-    when(authState){
-        is AuthState.Initial -> {
-            //Initial State
-        }
-        is AuthState.Error -> {
-            //Change state to show error
-        }
-        AuthState.Loading -> {
-            CircularProgressIndicator()
-        }
-        is AuthState.Success -> {
-            val user = (authState as AuthState.Success).user
-            Log.v("TAGY","signed in as ${user}")
-            //Navigate the user after success
+    LaunchedEffect(authState){
+        if(authState is AuthState.Success){
+            navController.navigate(Route.Home.route){
+                popUpTo(Route.Login.route){inclusive = true}
+            }
         }
     }
 
@@ -250,7 +240,7 @@ fun LoginScreen(viewModel: AuthViewModel) {
                     contentDescription = "Google",
                     onClick = {
                       coroutineScope.launch {
-                          googleSignInClient.signIn()
+                          viewModel.signInWithGoogle()
                       }
                     }
                 )

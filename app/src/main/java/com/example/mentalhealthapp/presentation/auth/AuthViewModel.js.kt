@@ -62,16 +62,19 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    fun signInWithGoogle(idToken: String) {
+    fun signInWithGoogle() {
         viewModelScope.launch {
-            val user = signInWithGoogleUseCase.invoke(idToken)
-            if (user != null) {
-                AuthState.Success(user)
-            } else {
-                AuthState.Error(exception = Exception("Google-Sign-In failed"))
-            }
+            _authState.value = AuthState.Loading
+            val result = signInWithGoogleUseCase()
+            result.fold(
+                onSuccess = { user ->
+                    _authState.value = AuthState.Success(user)
+                },
+                onFailure = { exception ->
+                    _authState.value = AuthState.Error(exception)
+                }
+            )
         }
     }
-
 
 }
