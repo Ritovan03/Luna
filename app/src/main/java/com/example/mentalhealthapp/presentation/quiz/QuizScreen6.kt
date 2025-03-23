@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.NotInterested
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -42,7 +43,8 @@ enum class MedicationOption {
     OVER_THE_COUNTER,
     NOT_TAKING_ANY,
     PREFER_NOT_TO_SAY,
-    NONE
+    NONE,
+    CLEAR_STRUCTURED_PLAN
 }
 
 
