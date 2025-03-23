@@ -39,6 +39,8 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Dp
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -144,15 +146,14 @@ fun QuizScreen8(navController: NavHostController) {
             // Crying woman image
             Box(
                 modifier = Modifier
-                    .size(160.dp)
-                    .clip(CircleShape)
-                    .background(Color.White),
+                    .size(200.dp) // Increased from 160.dp
+                    .clip(CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.quiz8), // Use the image resource you'll provide
+                    painter = painterResource(id = R.drawable.quiz8),
                     contentDescription = "Mental Health Symptoms",
-                    modifier = Modifier.size(120.dp)
+                    modifier = Modifier.fillMaxSize(), // Fill the entire box
                 )
             }
 
@@ -162,44 +163,59 @@ fun QuizScreen8(navController: NavHostController) {
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(300.dp) // Increased from 200.dp
                     .padding(vertical = 8.dp),
                 shape = RoundedCornerShape(24.dp),
                 color = Color.White,
                 border = BorderStroke(1.dp, greenColor)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxSize()
                 ) {
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        mainAxisSpacing = 8.dp,
-                        crossAxisSpacing = 8.dp
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
                     ) {
-                        symptoms.forEach { symptom ->
-                            AssistChip(
-                                onClick = { },
-                                label = { Text(symptom) },
-                                colors = AssistChipDefaults.assistChipColors(
-                                    containerColor = greenColor.copy(alpha = 0.2f),
-                                    labelColor = greenColor
-                                ),
-                                trailingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Default.Close,
-                                        contentDescription = "Remove",
-                                        modifier = Modifier
-                                            .size(16.dp)
-                                            .clickable {
-                                                symptoms = symptoms.filter { it != symptom }
-                                            },
-                                        tint = greenColor
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp) // Added padding to prevent overlap
+                        ) {
+                            FlowRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                mainAxisSpacing = 8.dp,
+                                crossAxisSpacing = 12.dp // Increased from 8.dp for better spacing
+                            ) {
+                                symptoms.forEach { symptom ->
+                                    AssistChip(
+                                        onClick = { },
+                                        label = { Text(symptom) },
+                                        colors = AssistChipDefaults.assistChipColors(
+                                            containerColor = greenColor.copy(alpha = 0.2f),
+                                            labelColor = greenColor
+                                        ),
+                                        trailingIcon = {
+                                            Icon(
+                                                imageVector = Icons.Default.Close,
+                                                contentDescription = "Remove",
+                                                modifier = Modifier
+                                                    .size(16.dp)
+                                                    .clickable {
+                                                        symptoms = symptoms.filter { it != symptom }
+                                                    },
+                                                tint = greenColor
+                                            )
+                                        }
                                     )
                                 }
-                            )
+                            }
                         }
                     }
 
-                    // Input field
                     OutlinedTextField(
                         value = symptomInput,
                         onValueChange = { symptomInput = it },
@@ -255,44 +271,7 @@ fun QuizScreen8(navController: NavHostController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             // Most Common section
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Most Common:",
-                    color = textBrownColor,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
-                )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    commonSymptoms.forEach { symptom ->
-                        AssistChip(
-                            onClick = {
-                                if (!symptoms.contains(symptom) && symptoms.size < maxSymptoms) {
-                                    symptoms = symptoms + symptom
-                                }
-                            },
-                            label = { Text(symptom) },
-                            modifier = Modifier.padding(end = 8.dp),
-                            colors = AssistChipDefaults.assistChipColors(
-                                containerColor = orangeColor,
-                                labelColor = Color.White
-                            ),
-                            trailingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Remove",
-                                    tint = Color.White
-                                )
-                            }
-                        )
-                    }
-                }
-            }
         }
 
         // Continue button

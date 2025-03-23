@@ -138,9 +138,10 @@ fun QuizScreen10(navController: NavHostController) {
                     iconResId = android.R.drawable.ic_menu_sort_by_size,
                     isSelected = selectedOption == Routines.CLEAR_STRUCTURED_PLAN,
                     backgroundColor = if (selectedOption == Routines.CLEAR_STRUCTURED_PLAN)
-                        Color.White else unselectedCardColor,
-                    borderColor = if (selectedOption == Routines.CLEAR_STRUCTURED_PLAN)
-                        textBrownColor else Color.Transparent,
+                        selectedGreenColor else unselectedCardColor,
+                    borderColor = Color.Transparent,
+                    contentColor = if (selectedOption == Routines.CLEAR_STRUCTURED_PLAN)
+                        Color.White else textBrownColor,
                     onClick = { selectedOption = Routines.CLEAR_STRUCTURED_PLAN }
                 )
 
@@ -153,8 +154,7 @@ fun QuizScreen10(navController: NavHostController) {
                     isSelected = selectedOption == Routines.GO_WITH_FLOW,
                     backgroundColor = if (selectedOption == Routines.GO_WITH_FLOW)
                         selectedGreenColor else unselectedCardColor,
-                    borderColor = if (selectedOption == Routines.GO_WITH_FLOW)
-                        Color.Transparent else Color.Transparent,
+                    borderColor = Color.Transparent,
                     contentColor = if (selectedOption == Routines.GO_WITH_FLOW)
                         Color.White else textBrownColor,
                     onClick = { selectedOption = Routines.GO_WITH_FLOW }
@@ -175,9 +175,10 @@ fun QuizScreen10(navController: NavHostController) {
                     iconResId = android.R.drawable.ic_menu_close_clear_cancel,
                     isSelected = selectedOption == Routines.OCCASIONAL_REMINDERS,
                     backgroundColor = if (selectedOption == Routines.OCCASIONAL_REMINDERS)
-                        Color.White else unselectedCardColor,
-                    borderColor = if (selectedOption == Routines.OCCASIONAL_REMINDERS)
-                        textBrownColor else Color.Transparent,
+                        selectedGreenColor else unselectedCardColor,
+                    borderColor = Color.Transparent,
+                    contentColor = if (selectedOption == Routines.OCCASIONAL_REMINDERS)
+                        Color.White else textBrownColor,
                     onClick = { selectedOption = Routines.OCCASIONAL_REMINDERS }
                 )
 
@@ -189,20 +190,22 @@ fun QuizScreen10(navController: NavHostController) {
                     iconResId = android.R.drawable.ic_menu_close_clear_cancel,
                     isSelected = selectedOption == Routines.MOOD_BASED_PRIORITY,
                     backgroundColor = if (selectedOption == Routines.MOOD_BASED_PRIORITY)
-                        Color.White else unselectedCardColor,
-                    borderColor = if (selectedOption == Routines.MOOD_BASED_PRIORITY)
-                        textBrownColor else Color.Transparent,
+                        selectedGreenColor else unselectedCardColor,
+                    borderColor = Color.Transparent,
+                    contentColor = if (selectedOption == Routines.MOOD_BASED_PRIORITY)
+                        Color.White else textBrownColor,
                     onClick = { selectedOption = Routines.MOOD_BASED_PRIORITY }
                 )
             }
         }
 
         Button(
-            onClick = { navController.navigate(Route.Quiz11.route) },
+            onClick = { },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .clickable { navController.navigate(Route.Quiz11.route) },
             colors = ButtonDefaults.buttonColors(
                 containerColor = selectedBrownColor,
                 contentColor = Color.White

@@ -177,7 +177,8 @@ fun QuizScreen9(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = brownColor,
                 contentColor = Color.White

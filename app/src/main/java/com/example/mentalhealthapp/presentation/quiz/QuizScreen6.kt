@@ -44,7 +44,6 @@ enum class MedicationOption {
     NOT_TAKING_ANY,
     PREFER_NOT_TO_SAY,
     NONE,
-    CLEAR_STRUCTURED_PLAN
 }
 
 
@@ -129,119 +128,125 @@ fun QuizScreen6(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Options grid
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            // Options grid with larger buttons
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Prescribed Medications
-                OptionCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f),
-                    title = "Prescribed Medications",
-                    iconResId = android.R.drawable.ic_menu_sort_by_size, // Replace with actual icon resource
-                    isSelected = selectedOption == MedicationOption.PRESCRIBED,
-                    backgroundColor = if (selectedOption == MedicationOption.PRESCRIBED)
-                        Color.White else unselectedCardColor,
-                    borderColor = if (selectedOption == MedicationOption.PRESCRIBED)
-                        textBrownColor else Color.Transparent,
-                    onClick = { selectedOption = MedicationOption.PRESCRIBED }
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OptionCard(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(0.85f), // Makes buttons taller
+                        title = "Prescribed Medications",
+                        iconResId = android.R.drawable.ic_menu_sort_by_size,
+                        isSelected = selectedOption == MedicationOption.PRESCRIBED,
+                        backgroundColor = if (selectedOption == MedicationOption.PRESCRIBED)
+                            selectedGreenColor else unselectedCardColor,
+                        borderColor = Color.Transparent,
+                        contentColor = if (selectedOption == MedicationOption.PRESCRIBED)
+                            Color.White else textBrownColor,
+                        onClick = { selectedOption = MedicationOption.PRESCRIBED }
+                    )
 
-                // Over the Counter Supplements
-                OptionCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f),
-                    title = "Over the Counter Supplements",
-                    iconResId = android.R.drawable.ic_menu_help, // Replace with actual icon resource
-                    isSelected = selectedOption == MedicationOption.OVER_THE_COUNTER,
-                    backgroundColor = if (selectedOption == MedicationOption.OVER_THE_COUNTER)
-                        selectedGreenColor else unselectedCardColor,
-                    borderColor = if (selectedOption == MedicationOption.OVER_THE_COUNTER)
-                        Color.Transparent else Color.Transparent,
-                    contentColor = if (selectedOption == MedicationOption.OVER_THE_COUNTER)
-                        Color.White else textBrownColor,
-                    onClick = { selectedOption = MedicationOption.OVER_THE_COUNTER }
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // I'm not taking any
-                OptionCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f),
-                    title = "I'm not taking any",
-                    iconResId = android.R.drawable.ic_menu_close_clear_cancel, // Replace with actual icon resource
-                    isSelected = selectedOption == MedicationOption.NOT_TAKING_ANY,
-                    backgroundColor = if (selectedOption == MedicationOption.NOT_TAKING_ANY)
-                        Color.White else unselectedCardColor,
-                    borderColor = if (selectedOption == MedicationOption.NOT_TAKING_ANY)
-                        textBrownColor else Color.Transparent,
-                    onClick = { selectedOption = MedicationOption.NOT_TAKING_ANY }
-                )
-
-                // Prefer not to say
-                OptionCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f),
-                    title = "Prefer not to say",
-                    iconResId = android.R.drawable.ic_menu_close_clear_cancel, // Replace with actual icon resource
-                    isSelected = selectedOption == MedicationOption.PREFER_NOT_TO_SAY,
-                    backgroundColor = if (selectedOption == MedicationOption.PREFER_NOT_TO_SAY)
-                        Color.White else unselectedCardColor,
-                    borderColor = if (selectedOption == MedicationOption.PREFER_NOT_TO_SAY)
-                        textBrownColor else Color.Transparent,
-                    onClick = { selectedOption = MedicationOption.PREFER_NOT_TO_SAY }
-                )
-            }
-        }
-
-        // Continue button
-        Button(
-            onClick = {
-                if (selectedOption == MedicationOption.NOT_TAKING_ANY ||
-                    selectedOption == MedicationOption.PREFER_NOT_TO_SAY) {
-                    navController.navigate(Route.Quiz8.route)
-                } else if (selectedOption == MedicationOption.PRESCRIBED ||
-                    selectedOption == MedicationOption.OVER_THE_COUNTER) {
-                    navController.navigate(Route.Quiz7.route)
+                    OptionCard(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(0.85f),
+                        title = "Over the Counter Supplements",
+                        iconResId = android.R.drawable.ic_menu_help,
+                        isSelected = selectedOption == MedicationOption.OVER_THE_COUNTER,
+                        backgroundColor = if (selectedOption == MedicationOption.OVER_THE_COUNTER)
+                            selectedGreenColor else unselectedCardColor,
+                        borderColor = Color.Transparent,
+                        contentColor = if (selectedOption == MedicationOption.OVER_THE_COUNTER)
+                            Color.White else textBrownColor,
+                        onClick = { selectedOption = MedicationOption.OVER_THE_COUNTER }
+                    )
                 }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .align(Alignment.BottomCenter),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = selectedBrownColor,
-                contentColor = Color.White,
-                disabledContainerColor = selectedBrownColor.copy(alpha = 0.5f)
-            ),
-            enabled = selectedOption != MedicationOption.NONE,
-            shape = RoundedCornerShape(28.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OptionCard(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(0.85f),
+                        title = "I'm not taking any",
+                        iconResId = android.R.drawable.ic_menu_close_clear_cancel,
+                        isSelected = selectedOption == MedicationOption.NOT_TAKING_ANY,
+                        backgroundColor = if (selectedOption == MedicationOption.NOT_TAKING_ANY)
+                            selectedGreenColor else unselectedCardColor,
+                        borderColor = Color.Transparent,
+                        contentColor = if (selectedOption == MedicationOption.NOT_TAKING_ANY)
+                            Color.White else textBrownColor,
+                        onClick = { selectedOption = MedicationOption.NOT_TAKING_ANY }
+                    )
+
+                    OptionCard(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(0.85f),
+                        title = "Prefer not to say",
+                        iconResId = android.R.drawable.ic_menu_close_clear_cancel,
+                        isSelected = selectedOption == MedicationOption.PREFER_NOT_TO_SAY,
+                        backgroundColor = if (selectedOption == MedicationOption.PREFER_NOT_TO_SAY)
+                            selectedGreenColor else unselectedCardColor,
+                        borderColor = Color.Transparent,
+                        contentColor = if (selectedOption == MedicationOption.PREFER_NOT_TO_SAY)
+                            Color.White else textBrownColor,
+                        onClick = { selectedOption = MedicationOption.PREFER_NOT_TO_SAY }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Continue button
+            Button(
+                onClick = {
+                    if (selectedOption == MedicationOption.NOT_TAKING_ANY ||
+                        selectedOption == MedicationOption.PREFER_NOT_TO_SAY
+                    ) {
+                        navController.navigate(Route.Quiz8.route)
+                    } else if (selectedOption == MedicationOption.PRESCRIBED ||
+                        selectedOption == MedicationOption.OVER_THE_COUNTER
+                    ) {
+                        navController.navigate(Route.Quiz7.route)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = selectedBrownColor,
+                    contentColor = Color.White,
+                    disabledContainerColor = selectedBrownColor.copy(alpha = 0.5f)
+                ),
+                enabled = selectedOption != MedicationOption.NONE,
+                shape = RoundedCornerShape(28.dp)
             ) {
-                Text(
-                    text = "Continue",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    contentDescription = "Continue"
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Continue",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = "Continue"
+                    )
+                }
             }
         }
     }
@@ -292,3 +297,5 @@ fun OptionCard(
         }
     }
 }
+
+

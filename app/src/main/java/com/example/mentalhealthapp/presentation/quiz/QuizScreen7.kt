@@ -40,6 +40,7 @@ import androidx.compose.foundation.horizontalScroll
 
 
 data class Medicine(val name: String, val isSelected: Boolean = false)
+
 @Composable
 fun QuizScreen7(navController: NavHostController) {
     val backgroundColor = Color(0xFFF8F5F1) // Light beige background
@@ -101,6 +102,16 @@ fun QuizScreen7(navController: NavHostController) {
 
     // List of alphabets for filter pills
     val alphabets = listOf("A", "B", "C", "D", "...", "X", "Y", "Z")
+
+    // Filter medicines based on active alphabet
+    val filteredMedicines = remember(activeAlphabet, medicinesList) {
+        when (activeAlphabet) {
+            "..." -> medicinesList // Show all medicines when "..." is selected
+            else -> medicinesList.filter { medicine ->
+                medicine.startsWith(activeAlphabet, ignoreCase = true)
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -229,7 +240,7 @@ fun QuizScreen7(navController: NavHostController) {
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                items(medicinesList) { medicine ->
+                items(filteredMedicines) { medicine ->
                     val isSelected = selectedMedicines.contains(medicine)
 
                     Surface(
