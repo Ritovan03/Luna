@@ -171,8 +171,8 @@ fun QuizScreen9(navController: NavHostController) {
             onClick = {
                 // Log selected stress level
                 Log.d("StressLevel", "Selected stress level: $selectedLevel")
-                // Navigate to quiz10
-                navController.navigate(Route.Quiz10.route)
+                // TODO: Navigate to hoem screen as quizz screen 10 and 11 navigation is having some problem
+                navController.navigate(Route.Home.route)
             },
             modifier = Modifier
                 .fillMaxWidth()
