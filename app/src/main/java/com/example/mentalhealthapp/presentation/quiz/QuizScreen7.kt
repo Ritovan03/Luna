@@ -328,7 +328,7 @@ fun QuizScreen7(navController: NavHostController) {
                             "Selected Medications: ${selectedMedicines.joinToString(", ")}"
                         )
                         // Navigate to screen 9
-                        navController.navigate("quiz9")
+                        navController.navigate(Route.Quiz8.route)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
