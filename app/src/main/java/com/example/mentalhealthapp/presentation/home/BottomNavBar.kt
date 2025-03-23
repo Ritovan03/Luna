@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,30 +45,31 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
 
-
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-
     val bottomMenuItemsList = prepareBottomMenu()
     var selectedItem by remember {
         mutableStateOf("Home")
     }
 
     BottomAppBar(
-        cutoutShape = CircleShape,
+        cutoutShape = CircleShape,  // This creates the cutout for the FAB
         contentColor = colorResource(id = R.color.black),
         backgroundColor = colorResource(id = R.color.offwhite_screen_color),
-        elevation = 8.dp,
-        modifier = Modifier.height(70.dp) // Increased height of the bottom bar
+        elevation = 3.dp,
+        modifier = Modifier.height(70.dp)
     ) {
         bottomMenuItemsList.forEachIndexed { index, bottomMenuItem ->
+            // Add appropriate spacing for the FAB in the middle
             if (index == 2) {
+                // This empty item creates space for the FAB
                 BottomNavigationItem(
                     selected = false,
                     onClick = {},
                     icon = {},
                     enabled = false,
-                    modifier = Modifier.padding(horizontal = 0.dp) // Keep minimal space for FAB
+                    // Use weight instead of padding to ensure proper spacing
+                    modifier = Modifier.weight(1f)
                 )
             }
 
@@ -106,7 +108,7 @@ fun BottomNavigationBar(navController: NavController) {
                             enter = fadeIn() + expandVertically(),
                             exit = fadeOut() + shrinkVertically()
                         ) {
-
+                            // You can add a small indicator here if desired
                         }
 
                         Spacer(modifier = Modifier.height(4.dp))
@@ -139,6 +141,8 @@ fun BottomNavigationBar(navController: NavController) {
                 },
                 alwaysShowLabel = true,
                 enabled = true,
+                // Add weight to ensure equal spacing
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -178,19 +182,11 @@ fun prepareBottomMenu(): List<BottomMenuItem> {
 
 @Composable
 fun FloatingActionButton(navController: NavController) {
-    val scale by animateFloatAsState(
-        targetValue = 1.0f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        ),
-        label = "FabScale"
-    )
     Box(
         Modifier
             .size(72.dp)
-            .scale(scale)
             .clip(CircleShape)
+            .background(Color.Transparent)
             .clickable(
                 interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
                 indication = null, // Removes ripple effect
@@ -205,6 +201,7 @@ fun FloatingActionButton(navController: NavController) {
                 }
             )
     ) {
+
         Image(
             painter = painterResource(id = R.drawable.ic_chatbot),
             modifier = Modifier.matchParentSize(),

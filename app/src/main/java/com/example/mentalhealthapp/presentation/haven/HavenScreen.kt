@@ -31,10 +31,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
+import com.example.mentalhealthapp.ui.theme.UrbanistFont
 
 /**
  * 🏠 HavenScreen
@@ -53,7 +55,7 @@ fun HavenScreen(navController: NavHostController) {
         item {
             Text(
                 text = "Welcome to Haven",
-                style = MaterialTheme.typography.headlineMedium,
+                fontFamily = UrbanistFont,
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
                 color = colorResource(R.color.teal_text_color),
@@ -64,6 +66,7 @@ fun HavenScreen(navController: NavHostController) {
         // 🧠 Feature buttons section - Each button represents a different mental health tool
         item {
             ImageButton(
+                title = "Sensory Therapy",
                 imagePainter = painterResource(R.drawable.sensory_therapy_btn),
                 onClick = {}
             )
@@ -71,6 +74,7 @@ fun HavenScreen(navController: NavHostController) {
 
         item {
             ImageButton(
+                title = "To-do List",
                 imagePainter = painterResource(R.drawable.todo_list_btn),
                 onClick = {}
             )
@@ -78,6 +82,7 @@ fun HavenScreen(navController: NavHostController) {
 
         item {
             ImageButton(
+                title = "Thought Journal",
                 imagePainter = painterResource(R.drawable.thought_journal_btn),
                 onClick = {}
             )
@@ -85,6 +90,7 @@ fun HavenScreen(navController: NavHostController) {
 
         item {
             ImageButton(
+                title = "      Government\n Schemes & Support",
                 imagePainter = painterResource(R.drawable.govt_schemes_btn),
                 onClick = {}
             )
@@ -110,7 +116,7 @@ fun HavenScreen(navController: NavHostController) {
  * @param onClick The action to perform when clicked
  */
 @Composable
-fun ImageButton(imagePainter: Painter, onClick: () -> Unit) {
+fun ImageButton(title: String,imagePainter: Painter, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .height(110.dp)
@@ -126,6 +132,13 @@ fun ImageButton(imagePainter: Painter, onClick: () -> Unit) {
                 .clip(RoundedCornerShape(22.dp))
                 .clickable(onClick = onClick),
             contentScale = ContentScale.Crop
+        )
+        Text(
+            text = title,
+            fontWeight= FontWeight.Bold,
+            fontSize = 24.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(end = 24.dp)
         )
     }
 }
@@ -264,3 +277,10 @@ fun dummyArticles() = listOf(
         imageRes = painterResource(R.drawable.neurodivergent_article_2)
     ),
 )
+
+@Preview(showBackground = true)
+@Composable
+fun HavenScreenPreview() {
+    val navController = androidx.navigation.compose.rememberNavController()
+    HavenScreen(navController = navController)
+}
