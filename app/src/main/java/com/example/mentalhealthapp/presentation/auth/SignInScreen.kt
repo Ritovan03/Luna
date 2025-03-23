@@ -1,6 +1,9 @@
 package com.example.mentalhealthapp.presentation.auth
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,13 +18,24 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -37,21 +51,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
-import com.example.mentalhealthapp.ui.theme.UrbanistFont
 import kotlinx.coroutines.launch
 
 class WaveShape : Shape {
@@ -76,230 +90,315 @@ class WaveShape : Shape {
 }
 
 @Composable
-fun SignInScreen(viewModel: AuthViewModel,navController: NavHostController) {
-
-    val formState by viewModel.uiState.collectAsState()
-    val authState by viewModel.authState.collectAsState()
+fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
+    var isSignIn by remember { mutableStateOf(true) }
     var passwordVisible by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    LaunchedEffect(authState){
-        if(authState is AuthState.Success){
-            navController.navigate(Route.Home.route){
-                popUpTo(Route.Login.route){inclusive = true}
+
+    val authState by viewModel.authState.collectAsState()
+    val formState by viewModel.uiState.collectAsState()
+
+    // Navigation effect
+    LaunchedEffect(authState) {
+        if (authState is AuthState.Success) {
+            navController.navigate(Route.Home.route) {
+                popUpTo(Route.Login.route) { inclusive = true }
             }
         }
     }
 
-    val greenColor = Color(0xFF9BB168)
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(colorResource(R.color.offwhite_screen_color)),
+        contentAlignment = Alignment.Center
     ) {
-        // Top curved background
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp)
-                .background(
-                    color = greenColor,
-                    shape = WaveShape()
+        // Handle auth states
+        when (authState) {
+            is AuthState.Initial -> {
+                // Initial State
+            }
+            is AuthState.Error -> {
+                // Change state to show error
+            }
+            AuthState.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = colorResource(R.color.brown)
                 )
-        ) {
-            // Logo
-//            Image(
-//                painter = painterResource(id = R.drawable.logo),
-//                contentDescription = "Logo",
-//                modifier = Modifier
-//                    .size(48.dp)
-//                    .align(Alignment.Center)
-        }//            )
+            }
+            is AuthState.Success -> {
+                // Navigation is handled by LaunchedEffect
+            }
+        }
+
+        Image(
+            painter = painterResource(id = R.drawable.auth_bg),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.matchParentSize()
+        )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp)
-                .padding(top = 10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.height(120.dp))
+            // Title
+           Text(
+               text = if (isSignIn) "Sign In To Luna" else "Sign Up For Luna",
+               style = MaterialTheme.typography.headlineMedium,
+               fontWeight = FontWeight.Bold,
+               color = colorResource(R.color.brown),
+               modifier = Modifier.padding(bottom = 32.dp, top = 72.dp)
+           )
 
+            // Username field (only for sign up)
+            if (!isSignIn) {
+                Text(
+                    text = "Username",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorResource(R.color.brown),
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(bottom = 8.dp)
+                )
+
+                OutlinedTextField(
+                    value = formState.username,
+                    onValueChange = { viewModel.updateUsername(it) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    shape = RoundedCornerShape(24.dp),
+                    placeholder = { Text("Enter your username") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Username Icon",
+                            tint = Color.Gray
+                        )
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedBorderColor = Color.Black,
+                        focusedBorderColor = colorResource(R.color.brown)
+                    )
+                )
+            }
+
+            // Email field
             Text(
-                text = "Sign In To freud.ai",
-                fontSize = 36.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = UrbanistFont,
-                color = colorResource(id = R.color.brown),
-                modifier = Modifier.padding(top = 20.dp)
+                text = "Email Address",
+                style = MaterialTheme.typography.bodyMedium,
+                color = colorResource(R.color.brown),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
-            
-            Column(modifier = Modifier.fillMaxWidth().padding(top = 10.dp)) {
-                Text(
-                    text = "Email Address",
-                    color = colorResource(id = R.color.brown),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = UrbanistFont,
-                    modifier = Modifier.padding(bottom = 8.dp)
+            OutlinedTextField(
+                value = formState.email,
+                onValueChange = { viewModel.updateEmail(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                shape = RoundedCornerShape(24.dp),
+                placeholder = { Text("Enter your email") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Email Icon",
+                        tint = Color.Gray
+                    )
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = Color.Black,
+                    focusedBorderColor = colorResource(R.color.brown),
+                    focusedTextColor = colorResource(R.color.brown),
+                    unfocusedTextColor = Color.DarkGray
                 )
-                OutlinedTextField(
-                    value = formState.email,
-                    onValueChange = { viewModel.updateEmail(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(32.dp),
-                    placeholder = { Text("Enter your email",   fontFamily = UrbanistFont,) },
-                    leadingIcon = {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.ic_launcher_background),
-//                            contentDescription = "Email",
-//                            tint = greenColor
-//                        )
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = greenColor,
-                        unfocusedBorderColor = Color.LightGray
-                    ),
-                    singleLine = true
+            )
+
+            // Password field
+            Text(
+                text = "Password",
+                style = MaterialTheme.typography.bodyMedium,
+                color = colorResource(R.color.brown),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
+            )
+
+            OutlinedTextField(
+                value = formState.password,
+                onValueChange = { viewModel.updatePassword(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                shape = RoundedCornerShape(24.dp),
+                placeholder = { Text("Enter your password...") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Password Icon",
+                        tint = Color.Gray
+                    )
+                },
+                trailingIcon = {
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        androidx.compose.material.Icon(
+                            imageVector = if (passwordVisible)
+                                Icons.Filled.Visibility
+                            else
+                                Icons.Filled.VisibilityOff,
+                            contentDescription = if (passwordVisible) "Hide password" else "Show password",
+                            tint = Color.Gray
+                        )
+                    }
+                },
+                singleLine = true,
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = Color.Black,
+                    focusedBorderColor = colorResource(R.color.brown),
+                    focusedTextColor = colorResource(R.color.brown),
+                    unfocusedTextColor = Color.DarkGray
                 )
-            }
+            )
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Password",
-                    color = colorResource(id = R.color.brown),
-                    fontFamily = UrbanistFont,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                OutlinedTextField(
-                    value = formState.password,
-                    onValueChange = { viewModel.updatePassword(it)},
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(32.dp),
-                    placeholder = { Text("Enter your password...",   fontFamily = UrbanistFont,) },
-                    leadingIcon = {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.ic_launcher_background),
-//                            contentDescription = "Password",
-//                            tint = greenColor
-//                        )
-                    },
-                    trailingIcon = {
-//                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
-//                            Icon(
-//                                painter = painterResource(
-//                                    id = if (passwordVisible) R.drawable.ic_launcher_background
-//                                    else R.drawable.ic_launcher_background
-//                                ),
-//                                contentDescription = "Toggle password visibility",
-//                                tint = greenColor
-//                            )
-//                        }
-                    },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None
-                    else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = greenColor,
-                        unfocusedBorderColor = Color.LightGray
-                    ),
-                    singleLine = true
-                )
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-
-            Button(
-                onClick = { viewModel.signIn(formState.email,formState.password) },
+            // Sign In/Up Button
+           Button(
+                onClick = {
+                    if (isSignIn) {
+                        viewModel.signIn(formState.email, formState.password)
+                    } else {
+                        viewModel.signUp(formState.email, formState.password)
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.brown)),
-                shape = RoundedCornerShape(32.dp)
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.brown)
+                )
             ) {
                 Text(
-                    text = "Sign In",
-                    color = Color.White,
-                    fontFamily = UrbanistFont,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    text = if (isSignIn) "Sign In" else "Sign Up",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White
                 )
-//                Icon(
-//                    painter = painterResource(id = R.drawable.ic_launcher_background),
-//                    contentDescription = "Sign In",
-//                    tint = Color.White,
-//                    modifier = Modifier.padding(start = 8.dp)
-//                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = if (isSignIn) "Sign In" else "Sign Up",
+                    tint = Color.White
+                )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            // Google Sign In Button
+            Spacer(modifier = Modifier.height(16.dp))
 
+          GoogleSignInButton {
+              coroutineScope.launch {
+                  viewModel.signInWithGoogle(context)
+              }
+          }
+
+
+            // Sign Up and Forgot Password
+            Spacer(modifier = Modifier.height(24.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-//                SocialButton(
-//                    icon = R.drawable.ic_launcher_background,
-//                    contentDescription = "Facebook"
-//                )
-                Spacer(modifier = Modifier.width(16.dp))
-                SocialButton(
-                    icon = R.drawable.google_icon,
-                    contentDescription = "Google",
-                    onClick = {
-                      coroutineScope.launch {
-                          viewModel.signInWithGoogle(context)
-                      }
-                    }
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-//                SocialButton(
-//                    icon = R.drawable.ic_launcher_background,
-//                    contentDescription = "Instagram"
-//                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 15.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Don't have an account? ",
-                    fontFamily = UrbanistFont,
-                    color = Color.Gray,
-                    fontSize = 16.sp
+                    text = if (isSignIn) "Don't have an account? " else "Already have an account? ",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.DarkGray
                 )
                 Text(
-                    text = "Sign Up",
-                    fontFamily = UrbanistFont,
-                    color = Color(0xFFFF6B00),
-                    fontWeight = FontWeight.Bold
+                    text = if (isSignIn) "Sign Up" else "Sign In",
+                    modifier = Modifier.clickable {
+                        isSignIn = !isSignIn
+                        // Clear fields on switch
+                        viewModel.updateEmail("")
+                        viewModel.updatePassword("")
+                        if (!isSignIn) {
+                            viewModel.updateUsername("")
+                        }
+                    },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorResource(R.color.orange_Accent_color)
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Forgot Password",
-                color = Color(0xFFFF6B00),
-                fontWeight = FontWeight.Bold
-            )
+            if (isSignIn) {
+                TextButton(
+                    onClick = { /* onForgotPassword implementation */ },
+                    contentPadding = PaddingValues(0.dp)
+                ) {
+                    Text(
+                        text = "Forgot Password",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorResource(R.color.orange_Accent_color)
+                    )
+                }
+            }
         }
     }
 }
 
+@Composable
+fun GoogleSignInButton(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        shape = RoundedCornerShape(24.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF9BB168)
+        ),
+        border = BorderStroke(1.dp, Color.LightGray)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.google_icon),
+                contentDescription = "Google Icon",
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = "Sign in with Google",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = colorResource(R.color.brown)
+            )
+        }
+    }
+}
 @Composable
 fun SocialButton(
     icon: Int,
