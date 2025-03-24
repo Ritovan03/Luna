@@ -172,7 +172,7 @@ fun QuizScreen9(navController: NavHostController) {
                 // Log selected stress level
                 Log.d("StressLevel", "Selected stress level: $selectedLevel")
                 // TODO: Navigate to hoem screen as quizz screen 10 and 11 navigation is having some problem
-                navController.navigate(Route.Home.route)
+                navController.navigate(Route.Quiz10.route)
             },
             modifier = Modifier
                 .fillMaxWidth()
