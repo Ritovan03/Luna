@@ -31,7 +31,7 @@ fun HomeScreen() {
         topBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
-
+// ✅ Custom Top Bar
             when (currentRoute) {
                 BottomNavItem.Home.route -> HomeTopBar()
                 BottomNavItem.Tools.route -> ToolsTopBar()
@@ -44,7 +44,7 @@ fun HomeScreen() {
 
         floatingActionButton = {
             FloatingActionButton(navController)
-        },// ✅ Custom Top Bar
+        },
 
         bottomBar = {
             BottomNavigationBar(navController)

@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp.data.repository
 
+import android.content.Context
 import android.util.Log
 import com.example.mentalhealthapp.data.datasource.FireBaseAuthDataSource
 import com.example.mentalhealthapp.domain.repository.AuthRepository
@@ -17,9 +18,9 @@ class AuthRepoImp(private val authDataSource : FireBaseAuthDataSource) : AuthRep
         return authDataSource.signUp(email, password)
     }
 
-    override suspend fun getGoogleIdToken(): Result<String> {
+    override suspend fun getGoogleIdToken(context : Context): Result<String> {
         Log.v("LOGG","Getting the id")
-       return authDataSource.getGoogleIdToken()
+       return authDataSource.getGoogleIdToken(context)
     }
 
     override suspend fun firebaseSignInWithGoogle(idToken: String): Result<FirebaseUser> {

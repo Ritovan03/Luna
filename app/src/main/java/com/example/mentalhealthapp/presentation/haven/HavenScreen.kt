@@ -16,14 +16,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Scaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,20 +34,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.mentalhealthapp.R
-import com.example.mentalhealthapp.presentation.home.BottomNavigationBar
-import com.example.mentalhealthapp.presentation.home.FloatingActionButton
+import com.example.mentalhealthapp.ui.theme.UrbanistFont
 
-
-
+/**
+ * 🏠 HavenScreen
+ *
+ * Main haven screen that provides a safe space with various mental health resources.
+ * Contains interactive buttons for different features and curated articles.
+ */
 @Composable
 fun HavenScreen(navController: NavHostController) {
     LazyColumn(
@@ -58,23 +51,22 @@ fun HavenScreen(navController: NavHostController) {
         contentPadding = PaddingValues(bottom = 16.dp),
         modifier = Modifier.fillMaxSize(),
     ) {
-
-
+        // 👋 Welcome section
         item {
-            // Welcome Text - reduced size
             Text(
                 text = "Welcome to Haven",
-                style = MaterialTheme.typography.headlineMedium,
+                fontFamily = UrbanistFont,
                 fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,  // Reduced from 40sp
+                fontSize = 30.sp,
                 color = colorResource(R.color.teal_text_color),
-                modifier = Modifier.padding(bottom = 12.dp)  // Reduced from 16dp
+                modifier = Modifier.padding(bottom = 12.dp)
             )
         }
 
-        // ImageButtons
+        // 🧠 Feature buttons section - Each button represents a different mental health tool
         item {
             ImageButton(
+                title = "Sensory Therapy",
                 imagePainter = painterResource(R.drawable.sensory_therapy_btn),
                 onClick = {}
             )
@@ -82,6 +74,7 @@ fun HavenScreen(navController: NavHostController) {
 
         item {
             ImageButton(
+                title = "To-do List",
                 imagePainter = painterResource(R.drawable.todo_list_btn),
                 onClick = {}
             )
@@ -89,6 +82,7 @@ fun HavenScreen(navController: NavHostController) {
 
         item {
             ImageButton(
+                title = "Thought Journal",
                 imagePainter = painterResource(R.drawable.thought_journal_btn),
                 onClick = {}
             )
@@ -96,13 +90,14 @@ fun HavenScreen(navController: NavHostController) {
 
         item {
             ImageButton(
+                title = "      Government\n Schemes & Support",
                 imagePainter = painterResource(R.drawable.govt_schemes_btn),
                 onClick = {}
             )
         }
 
+        // 📚 Articles section - Horizontal scrollable list of articles
         item {
-            // Articles section
             ArticlesCuratedForYou(
                 articles = dummyArticles(),
                 onArticleClick = { /* Handle article click */ }
@@ -111,8 +106,17 @@ fun HavenScreen(navController: NavHostController) {
     }
 }
 
+/**
+ * 🔘 ImageButton
+ *
+ * Custom button that displays a full-width image that's clickable.
+ * Used for the main feature buttons in the Haven screen.
+ *
+ * @param imagePainter The image to display as the button
+ * @param onClick The action to perform when clicked
+ */
 @Composable
-fun ImageButton(imagePainter: Painter, onClick: () -> Unit) {
+fun ImageButton(title: String,imagePainter: Painter, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .height(110.dp)
@@ -129,9 +133,26 @@ fun ImageButton(imagePainter: Painter, onClick: () -> Unit) {
                 .clickable(onClick = onClick),
             contentScale = ContentScale.Crop
         )
+        Text(
+            text = title,
+            fontWeight= FontWeight.Bold,
+            fontSize = 24.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(end = 24.dp)
+        )
     }
 }
 
+/**
+ * 📝 Article data class
+ *
+ * Represents an article with its metadata.
+ *
+ * @param id Unique identifier for the article
+ * @param title The title text to display
+ * @param imageRes The image resource to show
+ * @param backgroundColor The background color for the card
+ */
 data class Article(
     val id: String,
     val title: String,
@@ -139,6 +160,14 @@ data class Article(
     val backgroundColor: Color = Color(0xFF68A99A)
 )
 
+/**
+ * 📚 ArticlesCuratedForYou
+ *
+ * Displays a horizontal scrollable row of article cards with a section title.
+ *
+ * @param articles List of articles to display
+ * @param onArticleClick Callback when an article is clicked
+ */
 @Composable
 fun ArticlesCuratedForYou(
     articles: List<Article>,
@@ -147,20 +176,20 @@ fun ArticlesCuratedForYou(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)  // Reduced from 16dp
+            .padding(vertical = 16.dp)
     ) {
-
+        // 📋 Section title
         Text(
             text = "Articles curated for you",
             style = MaterialTheme.typography.headlineSmall,
-            fontSize = 24.sp,  // Added specific font size
-            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)  // Reduced bottom padding
+            fontSize = 24.sp,
+            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
         )
 
-
+        // 🔄 Horizontal scrollable row of articles
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)  // Reduced from 12dp
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(articles) { article ->
                 ArticleCard(
@@ -172,42 +201,48 @@ fun ArticlesCuratedForYou(
     }
 }
 
+/**
+ * 🎴 ArticleCard
+ *
+ * Card component that displays an article with image and title.
+ *
+ * @param article The article data to display
+ * @param onClick Callback when the card is clicked
+ */
 @Composable
 fun ArticleCard(
     article: Article,
     onClick: () -> Unit
 ) {
-    // Card with rounded corners
     Card(
         modifier = Modifier
-            .width(240.dp)  // Reduced from 240dp
-            .height(180.dp),  // Reduced from 180dp
-        shape = RoundedCornerShape(16.dp),  // Reduced from 16dp
+            .width(240.dp)
+            .height(180.dp),
+        shape = RoundedCornerShape(16.dp),
         onClick = onClick,
         colors = CardDefaults.cardColors(
             containerColor = article.backgroundColor
         ),
-       border = androidx.compose.foundation.BorderStroke(
-           width = 1.dp,
-           color = Color.Black
-       )
+        border = androidx.compose.foundation.BorderStroke(
+            width = 1.dp,
+            color = Color.Black
+        )
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Article Image (top portion)
+            // 🖼️ Article image (top portion)
             Image(
                 painter = article.imageRes,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)  // Reduced from 120dp
-                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),  // Reduced from 16dp
+                    .height(120.dp)
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
                 contentScale = ContentScale.Crop,
-
             )
 
-
+            // 📝 Article title (bottom portion)
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.bodyLarge,
@@ -223,8 +258,12 @@ fun ArticleCard(
     }
 }
 
-
-
+/**
+ * 🧪 Mock Data
+ *
+ * Returns sample articles for testing and preview purposes.
+ * Replace with real data from repository when implementing.
+ */
 @Composable
 fun dummyArticles() = listOf(
     Article(
@@ -238,3 +277,10 @@ fun dummyArticles() = listOf(
         imageRes = painterResource(R.drawable.neurodivergent_article_2)
     ),
 )
+
+@Preview(showBackground = true)
+@Composable
+fun HavenScreenPreview() {
+    val navController = androidx.navigation.compose.rememberNavController()
+    HavenScreen(navController = navController)
+}
