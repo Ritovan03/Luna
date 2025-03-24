@@ -108,7 +108,8 @@ fun CommunityScreenContent(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)),
                 contentAlignment = Alignment.Center,
             ) {
 
@@ -173,14 +174,14 @@ fun CommunityTabs() {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.primary,
+            contentColor = colorResource(R.color.brown),
             indicator = { tabPositions ->
                 Box(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[selectedTab])
                         .height(3.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.primary,
+                            color = colorResource(R.color.brown),
                             shape = RoundedCornerShape(topStart = 3.dp, topEnd = 3.dp)
                         )
                 )
@@ -293,7 +294,7 @@ fun AllCommunitiesSection(communities: List<Community>) {
             Text(
                 text = "View all",
                 fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.primary,
+                color = colorResource(R.color.brown),
                 fontFamily = UrbanistFont
             )
         }
@@ -343,7 +344,7 @@ fun CreatePostCard() {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "write your post here",
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = colorResource(R.color.brown),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -366,22 +367,22 @@ fun CreatePostCard() {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = colorResource(R.color.brown),
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = "Add your post in",
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = colorResource(R.color.brown),
                         fontSize = 14.sp,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = colorResource(R.color.brown),
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -390,7 +391,7 @@ fun CreatePostCard() {
                     onClick = { },
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = colorResource(R.color.brown)
                     ),
                     modifier = Modifier.weight(2f),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
@@ -398,7 +399,8 @@ fun CreatePostCard() {
                     Text(
                         text = "Publish Post",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        color = colorResource(R.color.white)
                     )
                 }
             }
@@ -420,13 +422,13 @@ fun CommunityPostSection() {
             Text(
                 text = "Posted in ZigZag Minds",
                 fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = colorResource(R.color.brown)
             )
 
             Text(
                 text = "view community",
                 fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.primary
+                color = colorResource(R.color.brown)
             )
         }
 
@@ -477,7 +479,7 @@ fun CommunityPost() {
                     Text(
                         text = "Bangalore, India",
                         fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = colorResource(R.color.brown)
                     )
                 }
             }
