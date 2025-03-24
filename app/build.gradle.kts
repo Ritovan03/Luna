@@ -105,10 +105,11 @@ dependencies {
     //lottie
     implementation(libs.lottie.compose)
 
-    implementation ("androidx.compose.material:material-icons-extended:1.6.0")
-    implementation("androidx.compose.material:material:1.5.4") // Latest stable Material 2
+    implementation (libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material) // Latest stable Material 2
 
-
+  //firestore
+    implementation (libs.firebase.database.v2030)
 
     //google-signin
     implementation(libs.androidx.credentials.v150)

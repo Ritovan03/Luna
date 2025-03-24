@@ -96,6 +96,7 @@ class FireBaseAuthDataSource(private val context : Context,
         } catch (e: Exception) {
             Result.failure(e)
         }
+
     }
 
     fun signOut() {
