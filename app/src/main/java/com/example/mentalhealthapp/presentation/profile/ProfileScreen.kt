@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,12 +25,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -64,6 +70,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -196,6 +203,91 @@ fun ProfileContent(modifier: Modifier) {
                 }
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
+            OutlinedButton(
+                onClick = { /* Download Report logic */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(28.dp),
+                border = BorderStroke(1.5.dp, colorResource(R.color.brown)),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = colorResource(R.color.brown)
+                )
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Article,
+                        contentDescription = "Report Icon",
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(
+                        text = "Download Report",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colorResource(R.color.white)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            // Help & Support Section
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(
+                        elevation = 4.dp,
+                        shape = RoundedCornerShape(16.dp)
+                    ),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    SectionTitle("Help & Support")
+
+                    // Terms & Conditions / Privacy Policy
+                    SupportItem(
+                        icon = Icons.Default.Article,
+                        title = "Terms & Conditions / Privacy Policy",
+                        description = "View legal information",
+                        onClick = { /* Navigate to Terms */ }
+                    )
+
+                    // FAQs & Guides
+                    SupportItem(
+                        icon = Icons.Default.Help,
+                        title = "FAQs & Guides",
+                        description = "Quick help for navigating the app",
+                        onClick = { /* Navigate to FAQs */ }
+                    )
+
+                    // Contact Support
+                    SupportItem(
+                        icon = Icons.Default.Call,
+                        title = "Contact Support",
+                        description = "Reach out for technical or mental health support",
+                        onClick = { /* Navigate to Contact Support */ }
+                    )
+
+                    // Report Issues
+                    SupportItem(
+                        icon = Icons.Default.Report,
+                        title = "Report Issues",
+                        description = "Report bugs or inappropriate content",
+                        onClick = { /* Navigate to Report Issues */ },
+                        showDivider = false
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(32.dp))
 
             // Logout Button
@@ -224,7 +316,7 @@ fun ProfileContent(modifier: Modifier) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(40.dp))
         }
 
         // Date Picker Dialog with Animation
@@ -242,6 +334,79 @@ fun ProfileContent(modifier: Modifier) {
                     }
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun SupportItem(
+    icon: ImageVector,
+    title: String,
+    description: String,
+    onClick: () -> Unit,
+    showDivider: Boolean = true
+) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClick() }
+                .padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Icon with background
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(colorResource(R.color.brown).copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = title,
+                    tint = colorResource(R.color.brown),
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            // Title and description
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = title,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    color = Color.DarkGray,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = description,
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            // Arrow icon
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowRight,
+                contentDescription = "Navigate",
+                tint = colorResource(R.color.brown)
+            )
+        }
+
+        if (showDivider) {
+            Divider(
+                color = Color.LightGray.copy(alpha = 0.5f),
+                thickness = 1.dp
+            )
         }
     }
 }
