@@ -2,17 +2,24 @@ package com.example.mentalhealthapp.di
 
 import com.example.mentalhealthapp.BuildConfig
 import com.example.mentalhealthapp.data.datasource.FireBaseAuthDataSource
+import com.example.mentalhealthapp.data.datasource.ThoughtDumpDataSource
 import com.example.mentalhealthapp.data.datasource.ToDoDataSource
 import com.example.mentalhealthapp.data.repository.AuthRepoImp
+import com.example.mentalhealthapp.data.repository.ThoughtRepoImp
 import com.example.mentalhealthapp.data.repository.TodoRepositoryImpl
+import com.example.mentalhealthapp.domain.Usecases.AddThoughtDumpUseCase
 import com.example.mentalhealthapp.domain.Usecases.AddTodoUseCase
+import com.example.mentalhealthapp.domain.Usecases.DeleteThoughtDumpUseCase
 import com.example.mentalhealthapp.domain.Usecases.DeleteTodoUseCase
+import com.example.mentalhealthapp.domain.Usecases.GetThoughtDumpsUseCase
 import com.example.mentalhealthapp.domain.Usecases.GetTodosUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignInUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignInWithGoogleUseCase
 import com.example.mentalhealthapp.domain.Usecases.SignUpUseCase
+import com.example.mentalhealthapp.domain.Usecases.UpdateThoughtDumpUseCase
 import com.example.mentalhealthapp.domain.Usecases.UpdateTodoUseCase
 import com.example.mentalhealthapp.domain.repository.AuthRepository
+import com.example.mentalhealthapp.domain.repository.ThoughtDumpRepo
 import com.example.mentalhealthapp.domain.repository.TodoRepository
 import dagger.Module
 import dagger.Provides
@@ -94,4 +101,40 @@ object AppModule {
         return TodoRepositoryImpl(dataSource)
     }
 
+    @Provides
+    @Singleton
+    fun provideThoughtDumpDataSource(): ThoughtDumpDataSource {
+        return ThoughtDumpDataSource()
+    }
+
+    @Provides
+    @Singleton
+    fun provideThoughtDumpRepo(dataSource: ThoughtDumpDataSource): ThoughtDumpRepo {
+        return ThoughtRepoImp(dataSource)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideGetThoughtDumpsUseCase(repo: ThoughtDumpRepo): GetThoughtDumpsUseCase {
+        return GetThoughtDumpsUseCase(repo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddThoughtDumpUseCase(repo: ThoughtDumpRepo): AddThoughtDumpUseCase {
+        return AddThoughtDumpUseCase(repo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateThoughtDumpUseCase(repo: ThoughtDumpRepo): UpdateThoughtDumpUseCase {
+        return UpdateThoughtDumpUseCase(repo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteThoughtDumpUseCase(repo: ThoughtDumpRepo): DeleteThoughtDumpUseCase {
+        return DeleteThoughtDumpUseCase(repo)
+    }
 }

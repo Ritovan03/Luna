@@ -2,27 +2,12 @@ package com.example.mentalhealthapp.data.datasource
 
 import android.util.Log
 import com.example.mentalhealthapp.domain.model.Todo
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
-
 import kotlinx.coroutines.tasks.await
-import kotlin.coroutines.suspendCoroutine
 
 class ToDoDataSource {
 
@@ -50,7 +35,7 @@ class ToDoDataSource {
             userRef.set(mapOf("exists" to true), SetOptions.merge()).await()
 
             val todoRef = userRef.collection("todos").document()
-            Log.v("TAGG","Creating ref almsot done,${userRef}")
+            Log.v("TAGG","Creating ref done,${userRef}")
             val newTodo = todo.copy(id = todoRef.id)
 
             todoRef.set(newTodo).await()
