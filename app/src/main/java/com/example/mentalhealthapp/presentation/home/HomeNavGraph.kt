@@ -24,12 +24,12 @@ import com.example.mentalhealthapp.presentation.haven.HavenScreen
 import com.example.mentalhealthapp.presentation.profile.ProfileScreen
 
 @Composable
-fun HomeNavGraph(navController: NavHostController) {
+fun HomeNavGraph(navController: NavHostController , mainNavController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = BottomNavItem.Home.route
     ) {
-        composable(BottomNavItem.Home.route) { HomeContentScreen(navController) }
+        composable(BottomNavItem.Home.route) { HomeContentScreen(navController,mainNavController) }
         composable(BottomNavItem.Tools.route) { HavenScreen(navController) }
         composable(BottomNavItem.Community.route) { CommunityScreen(navController) }
         composable(BottomNavItem.Profile.route) { ProfileScreen(navController) }

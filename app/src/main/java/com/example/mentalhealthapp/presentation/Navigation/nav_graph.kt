@@ -12,6 +12,7 @@ import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
+import com.example.mentalhealthapp.presentation.home.AnxietyScreen
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen1
@@ -87,8 +88,9 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Quiz14.route) { QuizScreen14(navController) }
         composable(Route.Quiz15.route) { QuizScreen15(navController) }
 
-        composable(Route.Home.route) { HomeScreen() }
+        composable(Route.Home.route) { HomeScreen(navController) }
         composable(Route.Haven.route) { HavenScreen(navController) }
+        composable(Route.Anxiety.route) { AnxietyScreen(navController) }
     }
 }
 
