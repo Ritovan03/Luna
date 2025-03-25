@@ -1,6 +1,9 @@
 package com.example.mentalhealthapp.presentation.quiz
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,7 +12,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,20 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
 
-enum class NoiseSensitivityOption {
-    TUNE_OUT,
-    SLIGHT_DISTRACTION,
-    VERY_DISTRACTING,
-    SHUTDOWN,
-    NONE
-}
-
 @Composable
-fun QuizScreen13(navController: NavHostController) {
-    var selectedOption by remember { mutableStateOf(NoiseSensitivityOption.NONE) }
+fun QuizScreen14(navController: NavHostController) {
+    var selectedOption by remember { mutableStateOf<Boolean?>(null) }
 
     val backgroundColor = Color(0xFFF8F5F1)
     val selectedGreenColor = Color(0xFF8DB06F)
@@ -86,7 +85,7 @@ fun QuizScreen13(navController: NavHostController) {
                     color = Color(0xFFE8D0C0)
                 ) {
                     Text(
-                        text = "13 of 14",
+                        text = "14 of 14",
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                         color = textBrownColor,
                         fontSize = 14.sp
@@ -96,8 +95,19 @@ fun QuizScreen13(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Image
+            Image(
+                painter = painterResource(id = R.drawable.help_quiz),
+                contentDescription = "Mental health illustration",
+                modifier = Modifier
+                    .size(300.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
             Text(
-                text = "When your surroundings are noisy or chaotic, how do you respond?",
+                text = "Have you sought professional help before?",
                 modifier = Modifier.fillMaxWidth(),
                 color = textBrownColor,
                 fontWeight = FontWeight.Bold,
@@ -114,31 +124,37 @@ fun QuizScreen13(navController: NavHostController) {
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                listOf(
-                    NoiseSensitivityOption.TUNE_OUT to "I tune it out easily",
-                    NoiseSensitivityOption.SLIGHT_DISTRACTION to "It distracts me a bit but I can function",
-                    NoiseSensitivityOption.VERY_DISTRACTING to "It's very distracting and stressful",
-                    NoiseSensitivityOption.SHUTDOWN to "I shut down or feel the need to escape"
-                ).forEach { (option, text) ->
-                    OptionCard13(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(100.dp),
-                        title = text,
-                        iconResId = android.R.drawable.ic_menu_sort_by_size,
-                        isSelected = selectedOption == option,
-                        backgroundColor = if (selectedOption == option) selectedGreenColor else unselectedCardColor,
-                        borderColor = Color.Transparent,
-                        contentColor = if (selectedOption == option) Color.White else textBrownColor,
-                        onClick = { selectedOption = option }
-                    )
-                }
+                OptionCard14(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp),  // Reduced from 100.dp
+                    title = "Yes",
+                    iconResId = android.R.drawable.ic_menu_sort_by_size,
+                    isSelected = selectedOption == true,
+                    backgroundColor = if (selectedOption == true) selectedGreenColor else unselectedCardColor,
+                    borderColor = Color.Transparent,
+                    contentColor = if (selectedOption == true) Color.White else textBrownColor,
+                    onClick = { selectedOption = true }
+                )
+
+                OptionCard14(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp),  // Reduced from 100.dp
+                    title = "No",
+                    iconResId = android.R.drawable.ic_menu_sort_by_size,
+                    isSelected = selectedOption == false,
+                    backgroundColor = if (selectedOption == false) selectedGreenColor else unselectedCardColor,
+                    borderColor = Color.Transparent,
+                    contentColor = if (selectedOption == false) Color.White else textBrownColor,
+                    onClick = { selectedOption = false }
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = { navController.navigate(Route.Quiz14.route) },
+                onClick = { navController.navigate(Route.Quiz15.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -147,7 +163,7 @@ fun QuizScreen13(navController: NavHostController) {
                     contentColor = Color.White,
                     disabledContainerColor = selectedBrownColor.copy(alpha = 0.5f)
                 ),
-                enabled = selectedOption != NoiseSensitivityOption.NONE,
+                enabled = selectedOption != null,
                 shape = RoundedCornerShape(28.dp)
             ) {
                 Row(
@@ -170,8 +186,9 @@ fun QuizScreen13(navController: NavHostController) {
     }
 }
 
+
 @Composable
-private fun OptionCard13(
+private fun OptionCard14(
     modifier: Modifier = Modifier,
     title: String,
     iconResId: Int,
@@ -184,14 +201,14 @@ private fun OptionCard13(
     Surface(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .clickable { onClick() },
+            .clickable { onClick() },  // Fixed empty onClick
         color = backgroundColor,
         border = BorderStroke(width = if (isSelected) 2.dp else 0.dp, color = borderColor),
         shape = RoundedCornerShape(16.dp)
     ) {
         Row(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(12.dp)  // Reduced from 16.dp to fit smaller height
                 .fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
