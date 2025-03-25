@@ -1,5 +1,8 @@
 package com.example.mentalhealthapp.presentation.Navigation
 
+//import com.example.mentalhealthapp.presentation.quiz.QuizScreen10
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -7,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mentalhealthapp.presentation.auth.AuthViewModel
 import com.example.mentalhealthapp.presentation.auth.ForgotPasswordScreen
-import com.example.mentalhealthapp.presentation.auth.LoginScreen
 import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
@@ -20,8 +22,8 @@ import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen3
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen4
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen5
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen6
+import com.example.mentalhealthapp.presentation.profile.ProfileScreen
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen1
-import com.example.mentalhealthapp.presentation.quiz.QuizScreen10
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen11
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen12
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen13
@@ -49,6 +51,7 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
 //    }
 //}
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: String) {
     val authViewModel : AuthViewModel = hiltViewModel()
@@ -80,7 +83,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Quiz7.route) { QuizScreen7(navController) }
         composable(Route.Quiz8.route) { QuizScreen8(navController) }
         composable(Route.Quiz9.route) { QuizScreen9(navController) }
-        composable(Route.Quiz10.route) { QuizScreen10(navController) }
+        //composable(Route.Quiz10.route) { QuizScreen10(navController) }
         composable(Route.Quiz11.route) { QuizScreen11(navController) }
         composable(Route.Quiz12.route) { QuizScreen12(navController) }
         composable(Route.Quiz13.route) { QuizScreen13(navController) }
@@ -89,6 +92,8 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(Route.Home.route) { HomeScreen() }
         composable(Route.Haven.route) { HavenScreen(navController) }
+        composable(Route.Profile.route) { ProfileScreen(navController) }
+
     }
 }
 
