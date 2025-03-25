@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp.data.repository
 
+import android.util.Log
 import com.example.mentalhealthapp.data.datasource.ToDoDataSource
 import com.example.mentalhealthapp.domain.model.Todo
 import com.example.mentalhealthapp.domain.repository.TodoRepository
@@ -14,6 +15,7 @@ class TodoRepositoryImpl(
     }
 
     override suspend fun addTodo(userId: String, todo: Todo): Boolean {
+        Log.v("TAGYY","Add todo impl")
         return dataSource.addTodo(userId, todo)
     }
 

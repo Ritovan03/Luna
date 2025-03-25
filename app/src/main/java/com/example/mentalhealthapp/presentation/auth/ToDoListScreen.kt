@@ -34,30 +34,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentalhealthapp.domain.model.Todo
-
 @Composable
 fun TodoListScreen(
     viewModel: ToDoViewModel,
-    userId: String
 ) {
     val todoState by viewModel.todoState.collectAsState()
     var taskText by remember { mutableStateOf("") }
+    var editingTodo by remember { mutableStateOf<Todo?>(null) }
 
     LaunchedEffect(Unit) {
-        viewModel.fetchTodos(userId)
+        viewModel.fetchTodos()
     }
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)) {
 
-        // Add Todo Row
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -66,23 +60,28 @@ fun TodoListScreen(
                 value = taskText,
                 onValueChange = { taskText = it },
                 modifier = Modifier.weight(1f),
-                label = { Text("Enter task") }
+                label = { Text(if (editingTodo != null) "Edit Task" else "Enter Task") }
             )
             Spacer(modifier = Modifier.width(8.dp))
             Button(onClick = {
                 if (taskText.isNotBlank()) {
-                    val newTodo = Todo(task = taskText)
-                    viewModel.addTodo(userId, newTodo)
+                    if (editingTodo != null) {
+                        val updatedTodo = editingTodo!!.copy(task = taskText)
+                        viewModel.updateTodo(updatedTodo)
+                        editingTodo = null
+                    } else {
+                        val newTodo = Todo(task = taskText)
+                        viewModel.addTodo(newTodo)
+                    }
                     taskText = ""
                 }
             }) {
-                Text("Add")
+                Text(if (editingTodo != null) "Update" else "Add")
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Todo List
         when (todoState) {
             is ResultState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -104,7 +103,7 @@ fun TodoListScreen(
 
                 if (todos.isEmpty()) {
                     Text(
-                        text = "No Todos available.",
+                        text = "No Todos present",
                         modifier = Modifier.padding(8.dp)
                     )
                 } else {
@@ -112,10 +111,10 @@ fun TodoListScreen(
                         items(todos) { todo ->
                             TodoItem(
                                 todo = todo,
-                                onDelete = { viewModel.deleteTodo(userId, todo.id) },
+                                onDelete = { viewModel.deleteTodo(todo.id) },
                                 onUpdate = {
-                                    val updatedTodo = todo.copy(task = todo.task + " (Updated)")
-                                    viewModel.updateTodo(userId, updatedTodo)
+                                    taskText = todo.task
+                                    editingTodo = todo
                                 }
                             )
                         }

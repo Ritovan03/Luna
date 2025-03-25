@@ -38,4 +38,5 @@ sealed class Route(
 
     object Home : Route("home")
     object Haven : Route("haven")
+    object Todo : Route("todo")
 }

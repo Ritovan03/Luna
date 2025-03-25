@@ -102,7 +102,7 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
     // Navigation effect
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
-            navController.navigate(Route.Home.route) {
+            navController.navigate(Route.Todo.route) {
                 popUpTo(Route.Login.route) { inclusive = true }
             }
         }

@@ -11,6 +11,8 @@ import com.example.mentalhealthapp.presentation.auth.LoginScreen
 import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
+import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
+import com.example.mentalhealthapp.presentation.auth.TodoListScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
@@ -35,6 +37,8 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen6
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen7
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen8
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 
 //@Composable
 //fun Navigation(startDestination : String){
@@ -89,6 +93,10 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(Route.Home.route) { HomeScreen() }
         composable(Route.Haven.route) { HavenScreen(navController) }
+        composable(Route.Todo.route){
+            val viewModel : ToDoViewModel = hiltViewModel()
+            TodoListScreen(viewModel)
+        }
     }
 }
 
