@@ -2,6 +2,7 @@ package com.example.mentalhealthapp.presentation.quiz
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -98,45 +99,48 @@ private fun TopNavigationBar(
     colors: Map<String, Color>
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier.padding(vertical = 14.dp)
     ) {
+        // Back button
         Box(
             modifier = Modifier
-                .size(40.dp)
+                .size(36.dp)
                 .clip(CircleShape)
-                .background(Color.White)
-                .clickable(onClick = onBackClick),
+                .border(1.dp, Color(0xFF65635F), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                painter = painterResource(id = android.R.drawable.ic_menu_revert),
-                contentDescription = "Back",
-                tint = colors["textBrown"]!!
+            Text(
+                text = "(",
+                color = Color(0xFF65635F),
+                fontSize = 18.sp
             )
         }
 
+        Spacer(modifier = Modifier.width(16.dp))
+
+        // Assessment title
         Text(
             text = "Assessment",
-            color = colors["textBrown"]!!,
-            fontWeight = FontWeight.Medium,
-            fontSize = 16.sp
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 18.sp,
+            color = Color(0xFF4A2B0F)
         )
 
+        Spacer(modifier = Modifier.weight(1f))
+
+        // Page indicator
         Surface(
             modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .background(colors["progressBackground"]!!),
-            color = colors["progressBackground"]!!
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFFEAE0D5))
+                .padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
             Text(
-                text = "13 of 14",
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                color = colors["textBrown"]!!,
-                fontSize = 14.sp
+                text = "10 of 15",
+                fontSize = 14.sp,
+                color = Color(0xFF4A2B0F),
+                modifier = Modifier.background(Color(0xFFEAE0D5))
             )
         }
     }

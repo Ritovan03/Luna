@@ -103,7 +103,7 @@ fun WelcomeScreen1(navController: NavHostController){
 
         // 🟤 Get Started Button
         Button(
-            onClick = { navController.navigate(Route.Welcome2.route) },
+            onClick = { navController.navigate(Route.Welcome1.route) },
             shape = RoundedCornerShape(24.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF507780)),
             modifier = Modifier.fillMaxWidth(0.8f)

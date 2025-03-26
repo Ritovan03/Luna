@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -56,45 +57,48 @@ fun QuizScreen15(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
+                // Back button
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { navController.popBackStack() },
+                        .border(1.dp, Color(0xFF65635F), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_revert),
-                        contentDescription = "Back",
-                        tint = brownColor
+                    Text(
+                        text = "(",
+                        color = Color(0xFF65635F),
+                        fontSize = 18.sp
                     )
                 }
 
+                Spacer(modifier = Modifier.width(16.dp))
+
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    color = brownColor,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    color = Color(0xFF4A2B0F)
                 )
 
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Page indicator
                 Surface(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Color(0xFFE8D0C0)),
-                    color = Color(0xFFE8D0C0)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
                         text = "15 of 15",
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        color = brownColor,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }
@@ -107,7 +111,8 @@ fun QuizScreen15(navController: NavHostController) {
                 color = brownColor,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                lineHeight = 32.sp  // Added line height for spacing between lines
             )
 
             Spacer(modifier = Modifier.height(48.dp))
@@ -162,6 +167,7 @@ fun QuizScreen15(navController: NavHostController) {
             )
         }
 
+        // Continue button
         Button(
             onClick = {
                 navController.navigate(Route.Home.route)
@@ -170,8 +176,7 @@ fun QuizScreen15(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 12.dp),
+                .align(Alignment.BottomCenter),  // Removed bottom padding
             colors = ButtonDefaults.buttonColors(
                 containerColor = brownColor,
                 contentColor = Color.White
