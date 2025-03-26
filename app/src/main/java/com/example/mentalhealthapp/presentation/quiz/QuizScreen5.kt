@@ -80,45 +80,48 @@ fun QuizScreen5(navController: NavHostController) {
                 .padding(horizontal = 24.dp, vertical = 28.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
+                // Back button
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { navController.popBackStack() },
+                        .border(1.dp, Color(0xFF65635F), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_revert),
-                        contentDescription = "Back",
-                        tint = textBrownColor
+                    Text(
+                        text = "(",
+                        color = Color(0xFF65635F),
+                        fontSize = 18.sp
                     )
                 }
 
-                // Screen Title
+                Spacer(modifier = Modifier.width(16.dp))
+
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    color = textBrownColor,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    color = Color(0xFF4A2B0F)
                 )
 
-                // Progress Indicator with QuizScreen8 styling
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Page indicator
                 Surface(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Color(0xFFE8D0C0)),
-                    color = Color(0xFFE8D0C0)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "8 of 14",
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        color = textBrownColor,
-                        fontSize = 14.sp
+                        text = "5 of 15",
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }
@@ -129,11 +132,11 @@ fun QuizScreen5(navController: NavHostController) {
             val sliderHandleColor = orangeColor
 
             val options = listOf(
-                SleepQualityOption("Excellent", "7-9 HOURS", Color(0xFF9BB168), R.drawable.iconlogo),
-                SleepQualityOption("Good", "6-7 HOURS", Color(0xFFFFCE5C), R.drawable.iconlogo),
-                SleepQualityOption("Fair", "5 HOURS", Color(0xFFC0A091), R.drawable.iconlogo),
-                SleepQualityOption("Poor", "3-4 HOURS", Color(0xFFED7E1C), R.drawable.iconlogo),
-                SleepQualityOption("Worst", "<3 HOURS", Color(0xFFA694F5), R.drawable.iconlogo)
+                SleepQualityOption("Excellent", "7-9 HOURS", Color(0xFF9BB168), R.drawable.excellent),
+                SleepQualityOption("Good", "6-7 HOURS", Color(0xFFFFCE5C), R.drawable.good),
+                SleepQualityOption("Fair", "5 HOURS", Color(0xFFC0A091), R.drawable.fair),
+                SleepQualityOption("Poor", "3-4 HOURS", Color(0xFFED7E1C), R.drawable.poor),
+                SleepQualityOption("Worst", "<3 HOURS", Color(0xFFA694F5), R.drawable.worst)
             )
 
             // Question text with updated brown color
@@ -173,7 +176,7 @@ fun QuizScreen5(navController: NavHostController) {
                 val selectedIndex = sliderPosition.roundToInt().coerceIn(0, options.size - 1)
 
                 // Calculate content height and option spacing
-                val contentHeight = 340.dp
+                val contentHeight = 380.dp
 
                 // Adjusted padding for perfect track length
                 val trackPadding = 22.dp
@@ -343,19 +346,19 @@ fun QuizScreen5(navController: NavHostController) {
             // Continue button with QuizScreen8 styling
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Continue Button
             Button(
                 onClick = {
                     navController.navigate(Route.Quiz6.route)
-                    Log.d("QuizScreen5", "screen5 button clicked")
                 },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = brownColor,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(28.dp), // More rounded corners like QuizScreen8
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF64422C),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(28.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -363,17 +366,13 @@ fun QuizScreen5(navController: NavHostController) {
                 ) {
                     Text(
                         text = "Continue",
-                        color = Color.White,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold // Bold like in QuizScreen8
+                        fontWeight = FontWeight.Bold
                     )
-
                     Spacer(modifier = Modifier.width(8.dp))
-
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Continue",
-                        tint = Color.White
+                        contentDescription = "Continue"
                     )
                 }
             }
@@ -387,8 +386,3 @@ data class SleepQualityOption(
     val color: Color,
     val emojiResId: Int
 )
-@Preview
-@Composable
-fun QuizScreen5Preview() {
-    QuizScreen5(NavHostController(LocalContext.current))
-}

@@ -124,48 +124,48 @@ fun QuizScreen7(navController: NavHostController) {
         ) {
             // Top bar with back button and progress
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
                 // Back button
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { /* Handle back navigation */ },
+                        .border(1.dp, Color(0xFF65635F), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_revert),
-                        contentDescription = "Back",
-                        tint = textBrownColor
+                    Text(
+                        text = "(",
+                        color = Color(0xFF65635F),
+                        fontSize = 18.sp
                     )
                 }
 
-                // Title
+                Spacer(modifier = Modifier.width(16.dp))
+
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    color = textBrownColor,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    color = Color(0xFF4A2B0F)
                 )
 
-                // Progress indicator
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Page indicator
                 Surface(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Color(0xFFE8D0C0)),
-                    color = Color(0xFFE8D0C0)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "10 of 14",
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        color = textBrownColor,
-                        fontSize = 14.sp
+                        text = "7 of 15",
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }

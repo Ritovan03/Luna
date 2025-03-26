@@ -38,6 +38,10 @@ sealed class Route(
 
     object Home : Route("home")
     object Haven : Route("haven")
+
+    object Anxiety : Route("anxiety")
+
   object Profile: Route("profile_screen")
+
 
 }

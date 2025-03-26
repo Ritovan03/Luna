@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.R
@@ -21,7 +22,7 @@ import com.example.mentalhealthapp.presentation.top_bar.ToolsTopBar
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(mainNavController: NavHostController) {
     val navController = rememberNavController() // ✅ Remember NavController for this screen
 
     Scaffold(
@@ -56,13 +57,8 @@ fun HomeScreen() {
 
         ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
-            HomeNavGraph(navController)
+            HomeNavGraph(navController, mainNavController)
         }
     }
 }
 
-@Composable
-@Preview
-fun homescreenpreview() {
-    HomeScreen()
-}

@@ -54,48 +54,48 @@ fun QuizScreen9(navController: NavHostController) {
         ) {
             // Top bar with back button and progress
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
                 // Back button
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { /* Handle back navigation */ },
+                        .border(1.dp, Color(0xFF65635F), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_revert),
-                        contentDescription = "Back",
-                        tint = brownColor
+                    Text(
+                        text = "(",
+                        color = Color(0xFF65635F),
+                        fontSize = 18.sp
                     )
                 }
 
-                // Title
+                Spacer(modifier = Modifier.width(16.dp))
+
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    color = brownColor,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    color = Color(0xFF4A2B0F)
                 )
 
-                // Progress indicator
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Page indicator
                 Surface(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Color(0xFFE8D0C0)),
-                    color = Color(0xFFE8D0C0)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "12 of 14",
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        color = brownColor,
-                        fontSize = 14.sp
+                        text = "9 of 15",
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }
@@ -167,21 +167,20 @@ fun QuizScreen9(navController: NavHostController) {
         }
 
         // Continue button
+        // Continue Button
         Button(
             onClick = {
                 // Log selected stress level
                 Log.d("StressLevel", "Selected stress level: $selectedLevel")
-                // TODO: Navigate to hoem screen as quizz screen 10 and 11 navigation is having some problem
                 navController.navigate(Route.Quiz10.route)
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 12.dp),
+                .align(Alignment.BottomCenter),
             colors = ButtonDefaults.buttonColors(
-                containerColor = brownColor,
-                contentColor = Color.White
+                containerColor = Color(0xFF64422C),
+                contentColor = Color.White,
             ),
             shape = RoundedCornerShape(28.dp)
         ) {

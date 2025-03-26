@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -37,31 +38,32 @@ import com.example.mentalhealthapp.R
 @Composable
 fun QuizScreen1(navController: NavHostController) {
     var selectedOption by remember { mutableStateOf(1) }
-
+    val selectedBrownColor = Color(0xFF64422C) // Brown color for continue button
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF8F7F5))
             .padding(16.dp)
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         Column(modifier = Modifier.fillMaxSize()) {
             // Top bar with back button and title
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
                 // Back button
-                IconButton(
-                    onClick = { /* Handle back navigation */ },
+                Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .border(1.dp, Color(0xFFE0DDD9), CircleShape)
+                        .border(1.dp, Color(0xFF65635F), CircleShape),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color(0xFF4A4A4A)
+                    Text(
+                        text = "(",
+                        color = Color(0xFF65635F),
+                        fontSize = 18.sp
                     )
                 }
 
@@ -85,7 +87,7 @@ fun QuizScreen1(navController: NavHostController) {
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "1 of 14",
+                        text = "1 of 15",
                         fontSize = 14.sp,
                         color = Color(0xFF4A2B0F),
                         modifier = Modifier.background(Color(0xFFEAE0D5))
@@ -106,7 +108,7 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 1 - Reduce stress
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "I wanna reduce stress",
                 isSelected = selectedOption == 0,
                 onClick = { selectedOption = 0 }
@@ -114,31 +116,31 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 2 - AI Therapy
             GoalOption(
-                icon = R.drawable.ic_home,
-                text = "I wanna try AI Therapy",
+                icon = R.drawable.baseline_menu_24,
+                text = "I find it difficult to concentrate and work on my goals",
                 isSelected = selectedOption == 1,
                 onClick = { selectedOption = 1 }
             )
 
             // Option 3 - Cope with trauma
             GoalOption(
-                icon = R.drawable.ic_home,
-                text = "I want to cope with trauma",
+                icon = R.drawable.baseline_menu_24,
+                text = "I get anxious and overwhelmed easily",
                 isSelected = selectedOption == 2,
                 onClick = { selectedOption = 2 }
             )
 
             // Option 4 - Be a better person
             GoalOption(
-                icon = R.drawable.ic_home,
-                text = "I want to be a better person",
+                icon = R.drawable.baseline_menu_24,
+                text = "I need someone to talk to",
                 isSelected = selectedOption == 3,
                 onClick = { selectedOption = 3 }
             )
 
             // Option 5 - Trying out the app
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "Just trying out the app, mate!",
                 isSelected = selectedOption == 4,
                 onClick = { selectedOption = 4 }
@@ -148,37 +150,35 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Continue button
             Button(
-                onClick = { /* Handle continue action */ },
+                onClick = {
+                        navController.navigate(Route.Quiz2.route)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF5D3D1E)
-                )
+                    containerColor = selectedBrownColor,
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(28.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                        .clickable{navController.navigate(Route.Quiz2.route)}
-
-
-
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
                         text = "Continue",
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White
+                        fontWeight = FontWeight.Bold
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_profile),
-                        contentDescription = "Continue",
-                        tint = Color.White
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = "Continue"
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -189,7 +189,7 @@ fun GoalOption(
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,
-    backgroundColor: Color = if (isSelected) Color(0xFFA9C47F) else Color.White,
+    backgroundColor: Color = if (isSelected) Color(0xFF8DB06F) else Color.White,
     textColor: Color = if (isSelected) Color.White else Color(0xFF4A4A4A),
     iconTint: Color = if (isSelected) Color.White else Color(0xFF8E8E8E)
 ) {

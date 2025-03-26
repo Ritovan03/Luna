@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,21 +40,28 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.R
 import androidx.compose.ui.text.style.TextAlign
+import com.example.mentalhealthapp.presentation.Navigation.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeContentScreen(navController: NavHostController) {
+fun HomeContentScreen(navController: NavHostController , mainNavController: NavHostController) {
    Box(
        modifier =  Modifier.fillMaxSize().background(colorResource(R.color.offwhite_screen_color))
    ) {
        Text("HomeScreen content")
    }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clickable { mainNavController.navigate(Route.Anxiety.route) }
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.anxious_home),
+            contentDescription = "Feeling Anxious Button"
+        )
+    }
 }
 
 
 
-@Preview
-@Composable
-fun HomeScreenPreview() {
-
-}

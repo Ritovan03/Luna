@@ -114,4 +114,9 @@ dependencies {
     implementation(libs.androidx.credentials.v150)
     implementation (libs.androidx.credentials.play.services.auth.vlatestversion)
     implementation (libs.googleid.vlatestversion)
+
+    //exoplayer
+    implementation ("androidx.media3:media3-exoplayer:1.5.1")
+    implementation ("androidx.media3:media3-ui:1.5.1")
+    implementation ("androidx.media3:media3-exoplayer-dash:1.5.1")
 }
