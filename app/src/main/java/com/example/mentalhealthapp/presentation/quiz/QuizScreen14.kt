@@ -31,7 +31,7 @@ import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
 
 @Composable
-fun QuizScreen14(navController: NavHostController) {
+fun QuiZScreen14(navController: NavHostController) {
     var selectedOption by remember { mutableStateOf<Boolean?>(null) }
 
     val backgroundColor = Color(0xFFF8F5F1)

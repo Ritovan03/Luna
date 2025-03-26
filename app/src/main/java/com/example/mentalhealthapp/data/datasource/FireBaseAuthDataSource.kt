@@ -95,6 +95,7 @@ class FireBaseAuthDataSource(private val webClientId: String){
         } catch (e: Exception) {
             Result.failure(e)
         }
+
     }
 
     fun signOut() {

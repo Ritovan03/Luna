@@ -41,7 +41,7 @@ sealed class Route(
 
     object Anxiety : Route("anxiety")
 
-  object Profile: Route("profile_screen")
+    object Profile: Route("profile_screen")
 
-
+    object Todo : Route("todo")
 }
