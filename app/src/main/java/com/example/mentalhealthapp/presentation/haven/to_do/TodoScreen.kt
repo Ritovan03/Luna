@@ -16,18 +16,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DismissDirection
+import androidx.compose.material.DismissState
+import androidx.compose.material.DismissValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FractionalThreshold
+import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.rememberDismissState
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -47,6 +56,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
@@ -87,6 +97,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import kotlin.math.abs
 
 enum class TaskPriority(val color: Color, val label: String) {
     HIGH(Color(0xFFE57373), "High"), // Red-ish
@@ -138,7 +149,7 @@ fun AddTaskFAB(onAddTask: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ToDoContent(modifier: Modifier = Modifier, onBackButtonPressed: () -> Unit) {
     // Sample tasks for demonstration
@@ -237,8 +248,22 @@ fun ToDoContent(modifier: Modifier = Modifier, onBackButtonPressed: () -> Unit) 
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(sortedTasks, key = { it.id }) { task ->
-                    TaskItem(
+                    // Swipe to delete implementation
+                    val dismissState = rememberDismissState(
+                        confirmStateChange = { dismissValue ->
+                            if (dismissValue == DismissValue.DismissedToStart) {
+                                // Remove task when dismissed
+                                tasks.removeIf { it.id == task.id }
+                                true
+                            } else {
+                                false
+                            }
+                        }
+                    )
+
+                    SwipeToDeleteTaskItem(
                         task = task,
+                        dismissState = dismissState,
                         onTaskChecked = { completed ->
                             val index = tasks.indexOfFirst { it.id == task.id }
                             if (index >= 0) {
@@ -301,6 +326,72 @@ fun ToDoContent(modifier: Modifier = Modifier, onBackButtonPressed: () -> Unit) 
     ) {
         AddTaskFAB {
             showAddTaskSheet = true
+        }
+    }
+}
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun SwipeToDeleteTaskItem(
+    task: Task,
+    dismissState: DismissState,
+    onTaskChecked: (Boolean) -> Unit
+) {
+    // Track the swipe progress to control background visibility and alignment
+    val dismissDirection = dismissState.dismissDirection
+    val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
+
+    SwipeToDismiss(
+        state = dismissState,
+        directions = setOf(DismissDirection.EndToStart),
+        dismissThresholds = { FractionalThreshold(0.4f) },
+        background = {
+            // This background will only be visible during swipe
+            val color = Color(0xFFA375F8) // Light purple color
+
+            // Calculate alpha based on swipe progress
+            val swipeProgress = if (dismissDirection == DismissDirection.EndToStart) {
+                abs(dismissState.progress.fraction)
+            } else {
+                0f
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(color)
+                    .padding(end = 16.dp),
+                contentAlignment = Alignment.CenterEnd // Right-aligned for left swipe
+            ) {
+                Row(
+                    modifier = Modifier.alpha(swipeProgress),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Delete",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete Task",
+                        tint = Color.White
+                    )
+                }
+            }
+        },
+        dismissContent = {
+            // The actual task item
+            TaskItem(task, onTaskChecked)
+        }
+    )
+
+    // Handle actual deletion
+    LaunchedEffect(isDismissed) {
+        if (isDismissed) {
+            // This should be handled by the confirmStateChange callback passed to rememberDismissState
         }
     }
 }
@@ -392,14 +483,14 @@ fun TaskItem(
                 tint = if (task.isCompleted) colorResource(R.color.brown) else Color.Gray,
                 modifier = Modifier
                     .size(28.dp)
-                  .clickable(
-                      interactionSource = remember { MutableInteractionSource() },
-                      indication = rememberRipple(
-                          bounded = false,
-                          radius = 14.dp
-                      ),
-                      onClick = { onTaskChecked(!task.isCompleted) }
-                  )
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = rememberRipple(
+                            bounded = false,
+                            radius = 14.dp
+                        ),
+                        onClick = { onTaskChecked(!task.isCompleted) }
+                    )
             )
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -685,42 +776,59 @@ fun AddTaskContent(
         )
 
         Dialog(onDismissRequest = { showTimePicker = false }) {
-            Card(
-                modifier = Modifier.padding(16.dp),
-                shape = RoundedCornerShape(16.dp)
+            Surface(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                color = Color.White
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .background(Color.White),
+                    modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    // Header
                     Text(
                         text = "Select Time",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
+                        color = colorResource(R.color.brown),
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
+                    // Don't constrain the TimePicker - let it use its natural size
                     TimePicker(
                         state = timePickerState,
                         colors = TimePickerDefaults.colors(
                             timeSelectorSelectedContainerColor = colorResource(R.color.brown),
                             timeSelectorSelectedContentColor = Color.White,
                             timeSelectorUnselectedContainerColor = Color.Transparent,
-                            timeSelectorUnselectedContentColor = Color.DarkGray
+                            timeSelectorUnselectedContentColor = Color.DarkGray,
+                            clockDialColor = colorResource(R.color.brown).copy(alpha = 0.1f),
+                            clockDialSelectedContentColor = Color.White,
+                            clockDialUnselectedContentColor = colorResource(R.color.brown),
+                            periodSelectorBorderColor = colorResource(R.color.brown)
                         )
                     )
 
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // Buttons
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp),
-                        horizontalArrangement = Arrangement.End
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        TextButton(onClick = { showTimePicker = false }) {
-                            Text("Cancel")
+                        TextButton(
+                            onClick = { showTimePicker = false }
+                        ) {
+                            Text(
+                                text = "Cancel",
+                                color = Color.Gray
+                            )
                         }
+
+                        Spacer(modifier = Modifier.width(16.dp))
 
                         TextButton(
                             onClick = {
@@ -733,7 +841,11 @@ fun AddTaskContent(
                                 showTimePicker = false
                             }
                         ) {
-                            Text("OK")
+                            Text(
+                                text = "OK",
+                                color = colorResource(R.color.brown),
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                     }
                 }
