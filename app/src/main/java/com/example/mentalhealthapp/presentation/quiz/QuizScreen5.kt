@@ -1,148 +1,135 @@
 package com.example.mentalhealthapp.presentation.quiz
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.mentalhealthapp.presentation.Navigation.Route
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Canvas
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.drag
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.gestures.verticalDrag
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.geometry.times
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.input.pointer.PointerInputChange
-import androidx.compose.ui.input.pointer.PointerInputScope
-import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
+import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
+import com.example.mentalhealthapp.presentation.Navigation.Route
 import kotlinx.coroutines.launch
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.atan2
-import kotlin.math.cos
 import kotlin.math.roundToInt
-import kotlin.math.sin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizScreen5(navController: NavHostController) {
+    // Colors from QuizScreen8
+    val backgroundColor = Color(0xFFF8F5F1) // Light beige background
+    val greenColor = Color(0xFF8DB06F) // Light green color
+    val brownColor = Color(0xFF64422C) // Brown color for continue button
+    val textBrownColor = Color(0xFF5A3C2C) // Brown color for text
+    val orangeColor = Color(0xFFE67E22) // Orange color (can use for slider)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(backgroundColor)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .padding(horizontal = 24.dp, vertical = 28.dp)
         ) {
-            // Top Bar
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
-                // Back Button
-                IconButton(
-                    onClick = { /* Navigate back */ },
+                // Back button
+                Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFF5F5F5))
+                        .border(1.dp, Color(0xFF65635F), CircleShape),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.DarkGray
+                    Text(
+                        text = "(",
+                        color = Color(0xFF65635F),
+                        fontSize = 18.sp
                     )
                 }
 
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.width(16.dp))
 
-                // Screen Title
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.DarkGray
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    color = Color(0xFF4A2B0F)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // Progress Indicator
-                Box(
+                // Page indicator
+                Surface(
                     modifier = Modifier
-                        .background(
-                            color = Color(0xFFF5F5F5),
-                            shape = RoundedCornerShape(12.dp)
-                        )
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "8 of 14",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Gray
+                        text = "5 of 15",
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }
 
-            val backgroundColor = Color(0xFFF7F4F2)
-            val textColor = Color(0xFF4F3422)
-            val mutedColor = Color(0xFFACA9A5)
-            val pillColor = Color(0xFFE8DDD9)
+            val textColor = textBrownColor
+            val mutedColor = textBrownColor.copy(alpha = 0.5f)
             val sliderColor = Color(0xFFE8DDD9)
-            val sliderHandleColor = Color(0xFFED7E1C)
-            val sliderHandleStrokeColor = Color(0xFFC96100)
-            val progressBarColor = Color(0xFFED7E1C)
+            val sliderHandleColor = orangeColor
 
             val options = listOf(
                 SleepQualityOption("Excellent", "7-9 HOURS", Color(0xFF9BB168), R.drawable.iconlogo),
@@ -152,17 +139,7 @@ fun QuizScreen5(navController: NavHostController) {
                 SleepQualityOption("Worst", "<3 HOURS", Color(0xFFA694F5), R.drawable.iconlogo)
             )
 
-            // Animation scope for smooth transitions
-            val coroutineScope = rememberCoroutineScope()
-
-            // Use animatable for smooth scrolling
-            var selectedOptionIndexFloat by remember { mutableStateOf(3f) } // Default to "Poor"
-            var selectedOptionIndex by remember { mutableStateOf(3) } // Default to "Poor"
-
-            // Calculate progress value based on position (inverted: 0 = worst, 1 = excellent)
-            val progressValue = (options.size - 1 - selectedOptionIndex) / (options.size - 1f)
-
-            // Question text - moved outside the slider box
+            // Question text with updated brown color
             Text(
                 text = "How would you rate your sleep quality?",
                 color = textColor,
@@ -175,220 +152,229 @@ fun QuizScreen5(navController: NavHostController) {
                     .padding(top = 40.dp, bottom = 60.dp)
             )
 
-            // Slider and options container
+            // Main content with slider
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f) // Use weight instead of fixed height
+                    .weight(1f)
             ) {
-                val density = LocalDensity.current
-                // Adjust the slider height to fit the screen properly
-                val sliderHeight = 340.dp
-                val sliderHeightPx = with(density) { sliderHeight.toPx() }
-                val optionSpacing = sliderHeightPx / (options.size - 1)
+                val coroutineScope = rememberCoroutineScope()
 
-                // Store drag offset for smoother movement
-                var dragOffset by remember { mutableStateOf(0f) }
-                var isDragging by remember { mutableStateOf(false) }
+                // Start with "Worst" (index 4)
+                var sliderPositionRaw by remember { mutableStateOf(4f) }
 
-                // Custom progress bar (track + filled portion)
-                Box(
-                    modifier = Modifier
-                        .width(8.dp)
-                        .height(sliderHeight)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(sliderColor)
-                        .align(Alignment.Center)
-                ) {
-                    // Filled portion of progress bar
-                    Box(
-                        modifier = Modifier
-                            .width(8.dp)
-                            .fillMaxHeight(progressValue) // Fill based on progress
-                            .align(Alignment.BottomCenter)
-                            .clip(RoundedCornerShape(4.dp))
-                            .background(progressBarColor)
-                    )
-                }
-
-                // Options layout with improved spacing
-                options.forEachIndexed { index, option ->
-                    val yPosition = (sliderHeightPx / (options.size - 1)) * index
-                    val yOffset = with(density) { yPosition.toDp() - (sliderHeight / 2) }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .offset(y = yOffset),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Left side content (text and hours)
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                        ) {
-                            Text(
-                                text = option.label,
-                                color = if (index == selectedOptionIndex) textColor else mutedColor,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Medium
-                            )
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_home),
-                                    contentDescription = "Clock",
-                                    tint = if (index == selectedOptionIndex) textColor else mutedColor,
-                                    modifier = Modifier.size(20.dp)
-                                )
-
-                                Text(
-                                    text = option.hours,
-                                    color = if (index == selectedOptionIndex) textColor else mutedColor,
-                                    fontSize = 18.sp
-                                )
-                            }
-                        }
-
-                        // Right side with emoji
-                        Image(
-                            painter = painterResource(id = option.emojiResId),
-                            contentDescription = option.label,
-                            modifier = Modifier
-                                .size(48.dp)
-                                .alpha(if (index == selectedOptionIndex) 1f else 0.4f)
-                        )
-                    }
-                }
-
-                // Draggable area for better touch control
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(sliderHeight)
-                        .align(Alignment.Center)
-                        .pointerInput(Unit) {
-                            detectDragGestures(
-                                onDragStart = {
-                                    isDragging = true
-                                    dragOffset = 0f
-                                },
-                                onDragEnd = {
-                                    isDragging = false
-                                    // Smooth animation to nearest option
-                                    coroutineScope.launch {
-                                        // Animate to the nearest index
-                                        dragOffset = 0f
-                                    }
-                                },
-                                onDragCancel = {
-                                    isDragging = false
-                                    dragOffset = 0f
-                                },
-                                onDrag = { change, dragAmount ->
-                                    change.consume()
-
-                                    // Add drag amount to offset with some damping for smoother feel
-                                    dragOffset += dragAmount.y * 0.9f
-
-                                    // Calculate new position based on drag
-                                    val totalOffset = (selectedOptionIndex * optionSpacing) + dragOffset
-                                    val newIndexFloat = totalOffset / optionSpacing
-
-                                    // Update selected index if it changed and in bounds
-                                    val newIndex = newIndexFloat.roundToInt().coerceIn(0, options.size - 1)
-
-                                    // Store floating point index for smoother transitions
-                                    selectedOptionIndexFloat = newIndexFloat.coerceIn(0f, (options.size - 1).toFloat())
-
-                                    if (newIndex != selectedOptionIndex) {
-                                        selectedOptionIndex = newIndex
-                                        // Reset drag offset partially after snapping to new index for smoother feel
-                                        dragOffset *= 0.5f
-                                    }
-
-                                    // If drag goes too far from current selected index, dampen the movement
-                                    if (abs(dragOffset) > optionSpacing * 0.6f) {
-                                        dragOffset *= 0.9f
-                                    }
-                                }
-                            )
-                        }
+                // Animate the slider position for smooth movement
+                val sliderPosition by animateFloatAsState(
+                    targetValue = sliderPositionRaw,
+                    animationSpec = spring(
+                        dampingRatio = 0.85f,
+                        stiffness = Spring.StiffnessLow  // Reduced stiffness for slower animation
+                    ),
+                    label = "sliderPosition"
                 )
 
-                // Slider handle with stem
-                Box(
-                    modifier = Modifier
-                        .offset(
-                            y = with(density) {
-                                (selectedOptionIndex * optionSpacing + dragOffset * 0.2f).toDp() - (sliderHeight / 2)
-                            }
-                        )
-                        .align(Alignment.Center)
+                val selectedIndex = sliderPosition.roundToInt().coerceIn(0, options.size - 1)
+
+                // Calculate content height and option spacing
+                val contentHeight = 340.dp
+
+                // Adjusted padding for perfect track length
+                val trackPadding = 22.dp
+                val trackHeight = contentHeight - (trackPadding * 2)
+
+                // Layout the options, slider, and emojis
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Handle
+                    // Left side - Options text
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(contentHeight),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Render options from top to bottom
+                        options.forEachIndexed { index, option ->
+                            Column {
+                                Text(
+                                    text = option.label,
+                                    color = if (index == selectedIndex) textColor else mutedColor,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_home),
+                                        contentDescription = "Clock",
+                                        tint = if (index == selectedIndex) textColor else mutedColor,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Text(
+                                        text = option.hours,
+                                        color = if (index == selectedIndex) textColor else mutedColor,
+                                        fontSize = 18.sp
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    // Center - Custom vertical slider
                     Box(
                         modifier = Modifier
-                            .size(56.dp)
-                            .clip(CircleShape)
-                            .background(sliderHandleColor)
-                            .align(Alignment.Center),
+                            .width(64.dp)
+                            .height(contentHeight),
                         contentAlignment = Alignment.Center
                     ) {
-                        // White circle in the middle of the handle
+                        // Track background
                         Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .clip(CircleShape)
-                                .background(Color.White)
+                                .width(8.dp)
+                                .height(trackHeight)
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(sliderColor)
+                                .align(Alignment.Center)
                         )
+
+                        // Clickable area for the entire slider track
+                        Box(
+                            modifier = Modifier
+                                .width(64.dp)
+                                .height(trackHeight)
+                                .align(Alignment.Center)
+                                .pointerInput(Unit) {
+                                    detectTapGestures { offset ->
+                                        // Calculate new position based on tap position
+                                        val percentage = offset.y / size.height
+                                        val newPositionValue = percentage * (options.size - 1)
+
+                                        // Update slider position with the tapped position
+                                        sliderPositionRaw = newPositionValue.coerceIn(0f, (options.size - 1).toFloat())
+                                    }
+                                }
+                        )
+
+                        // Calculate handle position
+                        val handleOffset = if (options.size > 1) {
+                            val positionRatio = sliderPosition / (options.size - 1)
+                            val trackOffset = trackHeight * positionRatio
+                            trackOffset - (trackHeight / 2)
+                        } else {
+                            0.dp
+                        }
+
+                        // Draggable handle
+                        Box(
+                            modifier = Modifier
+                                .offset(y = handleOffset)
+                                .draggable(
+                                    orientation = Orientation.Vertical,
+                                    state = rememberDraggableState { delta ->
+                                        // Adjusted sensitivity for the new track length
+                                        val dragSensitivity = 0.005f
+                                        val newPosition = sliderPositionRaw + (delta * dragSensitivity)
+
+                                        // Make sure we stay within bounds
+                                        sliderPositionRaw = newPosition.coerceIn(
+                                            0f,
+                                            (options.size - 1).toFloat()
+                                        )
+                                    },
+                                    onDragStopped = {
+                                        // Snap to nearest position when drag stops
+                                        coroutineScope.launch {
+                                            // Animate to the nearest integer position
+                                            sliderPositionRaw = sliderPositionRaw.roundToInt().toFloat()
+                                        }
+                                    }
+                                )
+                        ) {
+                            // Orange hollow circle handle (using updated orangeColor)
+                            Box(
+                                modifier = Modifier
+                                    .size(56.dp)
+                                    .clip(CircleShape)
+                                    .background(sliderHandleColor)
+                                    .border(3.dp, sliderHandleColor, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                // Inner white circle (creating the hollow effect)
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .background(Color.White)
+                                        .border(1.dp, Color.White, CircleShape)
+                                )
+
+                                // Smaller orange circle in the center for a more refined look
+                                Box(
+                                    modifier = Modifier
+                                        .size(18.dp)
+                                        .clip(CircleShape)
+                                        .background(sliderHandleColor)
+                                )
+                            }
+                        }
                     }
 
-                    // Add stem line to the right
-                    Box(
+                    // Right side - Emoji icons
+                    Column(
                         modifier = Modifier
-                            .width(20.dp)
-                            .height(4.dp)
-                            .background(sliderHandleColor)
-                            .align(Alignment.CenterEnd)
-                            .offset(x = (-28).dp) // Position it before the emoji face
-                    )
+                            .width(48.dp)
+                            .height(contentHeight),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Render emojis from top to bottom
+                        options.forEachIndexed { index, option ->
+                            Image(
+                                painter = painterResource(id = option.emojiResId),
+                                contentDescription = option.label,
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .alpha(if (index == selectedIndex) 1f else 0.4f)
+                            )
+                        }
+                    }
                 }
             }
-        }
-        Button(
-            onClick = {
-                navController.navigate(Route.Quiz6.route)
-                Log.d("QuizScreen5", "screen5 button clicked")
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF3E3A33)
-            ),
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+
+            // Continue button with QuizScreen8 styling
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Continue Button
+            Button(
+                onClick = {
+                    navController.navigate(Route.Quiz6.route)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF64422C),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(28.dp)
             ) {
-                Text(
-                    text = "Continue",
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    contentDescription = "Continue",
-                    tint = Color.White
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Continue",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = "Continue"
+                    )
+                }
             }
         }
     }
@@ -400,9 +386,3 @@ data class SleepQualityOption(
     val color: Color,
     val emojiResId: Int
 )
-
-@Preview
-@Composable
-fun QuizScreen5Preview() {
-    QuizScreen5(NavHostController(LocalContext.current))
-}

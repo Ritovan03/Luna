@@ -22,7 +22,7 @@ import kotlinx.coroutines.delay
 fun SplashScreen(navController: NavHostController){
     LaunchedEffect(Unit) {
         delay(2000) // Simulate loading
-        navController.navigate(Route.Home.route) {
+        navController.navigate(Route.Quiz1.route) {
             popUpTo(Route.Splash.route) { inclusive = true }
         }
     }

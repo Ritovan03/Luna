@@ -39,9 +39,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
 
@@ -63,11 +65,12 @@ fun QuizScreen2(navController: NavHostController) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Assessment Header
+            // Top bar with back button and title
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
+                // Back button
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -82,27 +85,30 @@ fun QuizScreen2(navController: NavHostController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    color = Color(0xFF65635F),
+                    fontWeight = FontWeight.SemiBold,
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
+                    color = Color(0xFF4A2B0F)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
+                // Page indicator
                 Surface(
-                    color = Color(0xFFE8DED5),
-                    shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "2 of 14",
-                        color = Color(0xFF65635F),
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        fontSize = 14.sp
+                        text = "2 of 15",
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }
@@ -121,10 +127,13 @@ fun QuizScreen2(navController: NavHostController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             // Male Option - Using full images for both states as requested
+            // Male Option
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(160.dp)  // Fixed height for both options
                     .padding(4.dp)
+                    .clip(RoundedCornerShape(16.dp))
                     .clickable { selectedGender = Gender.MALE }
             ) {
                 Image(
@@ -136,18 +145,21 @@ fun QuizScreen2(navController: NavHostController) {
                         }
                     ),
                     contentDescription = "Male Option",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop  // Use Crop to maintain aspect ratio
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Female Option - Using full images for both states as requested
+// Female Option
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(160.dp)
+                    .size(160.dp)// Same fixed height as male option
                     .padding(4.dp)
+                    .clip(RoundedCornerShape(16.dp))
                     .clickable { selectedGender = Gender.FEMALE }
             ) {
                 Image(
@@ -159,8 +171,8 @@ fun QuizScreen2(navController: NavHostController) {
                         }
                     ),
                     contentDescription = "Female Option",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillBounds  // Use Crop to maintain aspect ratio
                 )
             }
 
@@ -208,15 +220,15 @@ fun QuizScreen2(navController: NavHostController) {
                     navController.navigate(Route.Quiz3.route)
                     Log.d("QuizScreen2", "${selectedGender} button clicked")
                 },
-                enabled = selectedGender != Gender.NONE,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF3E3A33),
-                    disabledContainerColor = Color(0xFF3E3A33)
-                ),
-                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF64422C),
+                    contentColor = Color.White,
+                ),
+                enabled = selectedGender != Gender.NONE,
+                shape = RoundedCornerShape(28.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -224,22 +236,26 @@ fun QuizScreen2(navController: NavHostController) {
                 ) {
                     Text(
                         text = "Continue",
-                        color = Color.White,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Bold
                     )
-
                     Spacer(modifier = Modifier.width(8.dp))
-
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Continue",
-                        tint = Color.White
+                        contentDescription = "Continue"
                     )
                 }
             }
         }
     }
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun QuizScreen2Preview() {
+    val navController = rememberNavController()
+    QuizScreen1(navController = navController)
+}
+
 
 

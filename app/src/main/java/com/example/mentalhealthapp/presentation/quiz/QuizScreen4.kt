@@ -56,8 +56,9 @@ fun QuizScreen4(navController: NavHostController) {
             // Assessment Header
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(vertical = 14.dp)
             ) {
+                // Back button
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -72,27 +73,30 @@ fun QuizScreen4(navController: NavHostController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
+                // Assessment title
                 Text(
                     text = "Assessment",
-                    color = Color(0xFF65635F),
+                    fontWeight = FontWeight.SemiBold,
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
+                    color = Color(0xFF4A2B0F)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
+                // Page indicator
                 Surface(
-                    color = Color(0xFFE8DED5),
-                    shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFEAE0D5))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "4 of 14",
-                        color = Color(0xFF65635F),
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        fontSize = 14.sp
+                        text = "4 of 15",
+                        fontSize = 14.sp,
+                        color = Color(0xFF4A2B0F),
+                        modifier = Modifier.background(Color(0xFFEAE0D5))
                     )
                 }
             }
@@ -265,17 +269,19 @@ fun QuizScreen4(navController: NavHostController) {
             Spacer(modifier = Modifier.weight(1f))
 
             // Continue Button
+            // Continue Button
             Button(
                 onClick = {
                     navController.navigate(Route.Quiz5.route)
                 },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF3E3A33)
-                ),
-                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF64422C),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(28.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -283,17 +289,13 @@ fun QuizScreen4(navController: NavHostController) {
                 ) {
                     Text(
                         text = "Continue",
-                        color = Color.White,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Bold
                     )
-
                     Spacer(modifier = Modifier.width(8.dp))
-
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Continue",
-                        tint = Color.White
+                        contentDescription = "Continue"
                     )
                 }
             }
