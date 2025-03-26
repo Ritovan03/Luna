@@ -132,11 +132,11 @@ fun QuizScreen5(navController: NavHostController) {
             val sliderHandleColor = orangeColor
 
             val options = listOf(
-                SleepQualityOption("Excellent", "7-9 HOURS", Color(0xFF9BB168), R.drawable.iconlogo),
-                SleepQualityOption("Good", "6-7 HOURS", Color(0xFFFFCE5C), R.drawable.iconlogo),
-                SleepQualityOption("Fair", "5 HOURS", Color(0xFFC0A091), R.drawable.iconlogo),
-                SleepQualityOption("Poor", "3-4 HOURS", Color(0xFFED7E1C), R.drawable.iconlogo),
-                SleepQualityOption("Worst", "<3 HOURS", Color(0xFFA694F5), R.drawable.iconlogo)
+                SleepQualityOption("Excellent", "7-9 HOURS", Color(0xFF9BB168), R.drawable.excellent),
+                SleepQualityOption("Good", "6-7 HOURS", Color(0xFFFFCE5C), R.drawable.good),
+                SleepQualityOption("Fair", "5 HOURS", Color(0xFFC0A091), R.drawable.fair),
+                SleepQualityOption("Poor", "3-4 HOURS", Color(0xFFED7E1C), R.drawable.poor),
+                SleepQualityOption("Worst", "<3 HOURS", Color(0xFFA694F5), R.drawable.worst)
             )
 
             // Question text with updated brown color
@@ -176,7 +176,7 @@ fun QuizScreen5(navController: NavHostController) {
                 val selectedIndex = sliderPosition.roundToInt().coerceIn(0, options.size - 1)
 
                 // Calculate content height and option spacing
-                val contentHeight = 340.dp
+                val contentHeight = 380.dp
 
                 // Adjusted padding for perfect track length
                 val trackPadding = 22.dp

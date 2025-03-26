@@ -108,7 +108,7 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 1 - Reduce stress
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "I wanna reduce stress",
                 isSelected = selectedOption == 0,
                 onClick = { selectedOption = 0 }
@@ -116,7 +116,7 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 2 - AI Therapy
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "I find it difficult to concentrate and work on my goals",
                 isSelected = selectedOption == 1,
                 onClick = { selectedOption = 1 }
@@ -124,7 +124,7 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 3 - Cope with trauma
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "I get anxious and overwhelmed easily",
                 isSelected = selectedOption == 2,
                 onClick = { selectedOption = 2 }
@@ -132,7 +132,7 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 4 - Be a better person
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "I need someone to talk to",
                 isSelected = selectedOption == 3,
                 onClick = { selectedOption = 3 }
@@ -140,7 +140,7 @@ fun QuizScreen1(navController: NavHostController) {
 
             // Option 5 - Trying out the app
             GoalOption(
-                icon = R.drawable.ic_home,
+                icon = R.drawable.baseline_menu_24,
                 text = "Just trying out the app, mate!",
                 isSelected = selectedOption == 4,
                 onClick = { selectedOption = 4 }
