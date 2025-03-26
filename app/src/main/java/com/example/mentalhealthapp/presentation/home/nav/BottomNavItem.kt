@@ -1,4 +1,4 @@
-package com.example.mentalhealthapp.presentation.home
+package com.example.mentalhealthapp.presentation.home.nav
 
 import com.example.mentalhealthapp.R
 
