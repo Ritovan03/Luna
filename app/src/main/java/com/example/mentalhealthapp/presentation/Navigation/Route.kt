@@ -43,5 +43,7 @@ sealed class Route(
 
   object Profile: Route("profile_screen")
 
+  object Todo: Route("todo_screen")
+
 
 }

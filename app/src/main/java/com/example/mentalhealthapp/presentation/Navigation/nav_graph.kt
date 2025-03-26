@@ -14,6 +14,7 @@ import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
+import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
 import com.example.mentalhealthapp.presentation.home.AnxietyScreen
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
@@ -25,6 +26,7 @@ import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen5
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen6
 import com.example.mentalhealthapp.presentation.profile.ProfileScreen
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen1
+import com.example.mentalhealthapp.presentation.quiz.QuizScreen10
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen11
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen12
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen13
@@ -98,7 +100,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(Route.Profile.route) { ProfileScreen(navController) }
 
-
+        composable(Route.Todo.route) { ToDoScreen(navController) }
     }
 }
 
