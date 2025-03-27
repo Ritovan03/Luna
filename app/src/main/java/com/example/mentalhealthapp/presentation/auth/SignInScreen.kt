@@ -102,7 +102,7 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
     // Navigation effect
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
-            navController.navigate(Route.Home.route) {
+            navController.navigate(Route.Quiz1.route) {
                 popUpTo(Route.Login.route) { inclusive = true }
             }
         }
@@ -147,7 +147,7 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Title
+
            Text(
                text = if (isSignIn) "Sign In To Luna" else "Sign Up For Luna",
                style = MaterialTheme.typography.headlineMedium,
@@ -156,7 +156,6 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
                modifier = Modifier.padding(bottom = 32.dp, top = 72.dp)
            )
 
-            // Username field (only for sign up)
             if (!isSignIn) {
                 Text(
                     text = "Username",
@@ -194,7 +193,7 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
                 )
             }
 
-            // Email field
+
             Text(
                 text = "Email Address",
                 style = MaterialTheme.typography.bodyMedium,
@@ -232,7 +231,7 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
                 )
             )
 
-            // Password field
+
             Text(
                 text = "Password",
                 style = MaterialTheme.typography.bodyMedium,
@@ -283,7 +282,7 @@ fun SignInScreen(viewModel: AuthViewModel, navController: NavHostController) {
                 )
             )
 
-            // Sign In/Up Button
+
            Button(
                 onClick = {
                     if (isSignIn) {

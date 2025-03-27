@@ -8,3 +8,4 @@ sealed class AuthState {
     data class Success(val user: FirebaseUser) : AuthState()
     data class Error(val exception: Throwable) : AuthState()
 }
+

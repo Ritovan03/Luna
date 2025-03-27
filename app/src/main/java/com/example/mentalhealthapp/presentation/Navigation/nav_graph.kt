@@ -1,6 +1,5 @@
 package com.example.mentalhealthapp.presentation.Navigation
 
-//import com.example.mentalhealthapp.presentation.quiz.QuizScreen10
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -13,10 +12,18 @@ import com.example.mentalhealthapp.presentation.auth.ForgotPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
+
 import com.example.mentalhealthapp.presentation.chatbot.ChatScreen
 import com.example.mentalhealthapp.presentation.chatbot.ChatbotScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
 import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
+
+import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
+import com.example.mentalhealthapp.presentation.auth.TodoListScreen
+import com.example.mentalhealthapp.presentation.haven.HavenScreen
+import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
+import com.example.mentalhealthapp.presentation.home.AnxietyScreen
+
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen1
@@ -26,12 +33,12 @@ import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen4
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen5
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen6
 import com.example.mentalhealthapp.presentation.profile.ProfileScreen
+import com.example.mentalhealthapp.presentation.quiz.QuiZScreen14
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen1
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen10
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen11
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen12
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen13
-import com.example.mentalhealthapp.presentation.quiz.QuizScreen14
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen15
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen2
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen3
@@ -41,6 +48,8 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen6
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen7
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen8
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 
 //@Composable
 //fun Navigation(startDestination : String){
@@ -58,7 +67,7 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: String) {
-    val authViewModel : AuthViewModel = hiltViewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Route.Splash.route) { SplashScreen(navController) }
 
@@ -70,7 +79,8 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Welcome6.route) { WelcomeScreen6(navController) }
 
         composable(Route.Login.route) {
-            SignInScreen(authViewModel,navController) }
+            SignInScreen(authViewModel, navController)
+        }
         composable(Route.Signup.route) {
             SignupScreen(authViewModel)
         }
@@ -91,7 +101,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Quiz11.route) { QuizScreen11(navController) }
         composable(Route.Quiz12.route) { QuizScreen12(navController) }
         composable(Route.Quiz13.route) { QuizScreen13(navController) }
-        composable(Route.Quiz14.route) { QuizScreen14(navController) }
+        composable(Route.Quiz14.route) { QuiZScreen14(navController) }
         composable(Route.Quiz15.route) { QuizScreen15(navController) }
 
         composable(Route.Home.route) { HomeScreen(navController) }
@@ -101,9 +111,17 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(Route.Profile.route) { ProfileScreen(navController) }
 
+
         composable(Route.Chatbot.route) { ChatbotScreen(navController) }
         composable(Route.Chat.route) { ChatScreen(navController) }
 
+        composable(Route.Todo.route) { ToDoScreen(navController) }
+
+
+        composable(Route.Todo.route) {
+            val viewModel: ToDoViewModel = hiltViewModel()
+            TodoListScreen(viewModel)
+        }
     }
 }
 

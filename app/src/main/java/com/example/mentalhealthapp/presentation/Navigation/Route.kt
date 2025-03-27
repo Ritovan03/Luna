@@ -42,8 +42,15 @@ sealed class Route(
     object Anxiety : Route("anxiety")
   object Chatbot: Route("chatbot")
 
+
   object Profile: Route("profile_screen")
   object Chat: Route("chat")
 
+  object Todo: Route("todo_screen")
 
+
+    object Profile: Route("profile_screen")
+
+
+    object Todo : Route("todo")
 }
