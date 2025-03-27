@@ -12,11 +12,18 @@ import com.example.mentalhealthapp.presentation.auth.ForgotPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
+
+import com.example.mentalhealthapp.presentation.chatbot.ChatScreen
+import com.example.mentalhealthapp.presentation.chatbot.ChatbotScreen
+import com.example.mentalhealthapp.presentation.haven.HavenScreen
+import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
+
 import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
 import com.example.mentalhealthapp.presentation.auth.TodoListScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
 import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
 import com.example.mentalhealthapp.presentation.home.AnxietyScreen
+
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen1
@@ -104,7 +111,12 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(Route.Profile.route) { ProfileScreen(navController) }
 
+
+        composable(Route.Chatbot.route) { ChatbotScreen(navController) }
+        composable(Route.Chat.route) { ChatScreen(navController) }
+
         composable(Route.Todo.route) { ToDoScreen(navController) }
+
 
         composable(Route.Todo.route) {
             val viewModel: ToDoViewModel = hiltViewModel()

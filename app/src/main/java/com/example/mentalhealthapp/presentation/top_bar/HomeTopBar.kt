@@ -52,7 +52,7 @@ fun HomeTopBar() {
         xp = 90,
         mood = "Happy",
         streakDays = 3,
-        quoteOfTheDay = "\"I want to meet your madre, give respect to your padre\""
+        quoteOfTheDay = "\"For every minute you're angry, You lose 60 seconds of happiness\""
     )
 }
 

@@ -40,9 +40,11 @@ sealed class Route(
     object Haven : Route("haven")
 
     object Anxiety : Route("anxiety")
+  object Chatbot: Route("chatbot")
 
 
   object Profile: Route("profile_screen")
+  object Chat: Route("chat")
 
   object Todo: Route("todo_screen")
 

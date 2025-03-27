@@ -1,4 +1,4 @@
-package com.example.mentalhealthapp.presentation.home
+package com.example.mentalhealthapp.presentation.home.nav
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
+import com.example.mentalhealthapp.presentation.Navigation.Route
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -181,7 +182,7 @@ fun prepareBottomMenu(): List<BottomMenuItem> {
 }
 
 @Composable
-fun FloatingActionButton(navController: NavController) {
+fun FloatingActionButton(navController: NavHostController) {
     Box(
         Modifier
             .size(72.dp)
@@ -189,19 +190,15 @@ fun FloatingActionButton(navController: NavController) {
             .background(Color.Transparent)
             .clickable(
                 interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
-                indication = null, // Removes ripple effect
+                indication = null,
                 onClick = {
-                    navController.navigate(BottomNavItem.Chatbot.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
+                    // Use mainNavController instead of bottom nav controller
+                    navController.navigate(Route.Chatbot.route) {
                         launchSingleTop = true
-                        restoreState = true
                     }
                 }
             )
     ) {
-
         Image(
             painter = painterResource(id = R.drawable.ic_chatbot),
             modifier = Modifier.matchParentSize(),
