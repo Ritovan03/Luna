@@ -15,6 +15,7 @@ import com.example.mentalhealthapp.presentation.auth.SignupScreen
 import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
 import com.example.mentalhealthapp.presentation.auth.TodoListScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
+import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
 import com.example.mentalhealthapp.presentation.home.AnxietyScreen
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
@@ -102,6 +103,8 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Anxiety.route) { AnxietyScreen(navController) }
 
         composable(Route.Profile.route) { ProfileScreen(navController) }
+
+        composable(Route.Todo.route) { ToDoScreen(navController) }
 
         composable(Route.Todo.route) {
             val viewModel: ToDoViewModel = hiltViewModel()

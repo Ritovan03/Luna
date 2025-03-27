@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
+import com.example.mentalhealthapp.presentation.Navigation.Route
 import com.example.mentalhealthapp.ui.theme.UrbanistFont
 
 /**
@@ -76,7 +77,9 @@ fun HavenScreen(navController: NavHostController) {
             ImageButton(
                 title = "To-do List",
                 imagePainter = painterResource(R.drawable.todo_list_btn),
-                onClick = {}
+                onClick = {
+                    navController.navigate(Route.Todo.route)
+                }
             )
         }
 
