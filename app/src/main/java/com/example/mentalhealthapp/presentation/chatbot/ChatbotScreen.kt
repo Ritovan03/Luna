@@ -23,12 +23,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.mentalhealthapp.presentation.Navigation.Route
+import androidx.compose.ui.text.style.TextAlign
+import com.airbnb.lottie.compose.*
+import com.example.mentalhealthapp.R
 
 // Data Classes
 data class Conversation(
@@ -52,30 +56,82 @@ fun ChatbotScreen(mainNavController: NavHostController) {
         Conversation(3, "Coping strategies", "Breathing exercise", "3 days ago")
     )
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { mainNavController.navigate(Route.Chat.route) },
-                containerColor = Color(0xFF6AB7C3), // Primary color
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.birdie)
+    )
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF0F4F8))
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // Curved top section
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(280.dp),
+                color = Color(0xFF6AB7C3),
+                shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
             ) {
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = "New Chat",
-                    tint = Color.White
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    LottieAnimation(
+                        composition = composition,
+                        progress = { progress },
+                        modifier = Modifier
+                            .size(180.dp)
+                            .padding(top = 24.dp)
+                    )
+
+                    Text(
+                        text = "Meet Luna",
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                    Text(
+                        text = "Your AI Companion",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.White.copy(alpha = 0.9f)
+                    )
+                }
+            }
+
+            // Conversation History
+            LazyColumn(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 24.dp)
+                    .fillMaxWidth()
+            ) {
+                items(conversations) { conversation ->
+                    ConversationHistoryCard(conversation)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
         }
-    ) { padding ->
-        LazyColumn(
+
+        // FAB
+        FloatingActionButton(
+            onClick = { mainNavController.navigate(Route.Chat.route) },
+            containerColor = Color(0xFF6AB7C3),
+            elevation = FloatingActionButtonDefaults.elevation(8.dp),
             modifier = Modifier
-                .padding(padding)
+                .align(Alignment.BottomEnd)
                 .padding(16.dp)
-                .background(Color(0xFFF0F4F8)) // Background color
         ) {
-            items(conversations) { conversation ->
-                ConversationHistoryCard(conversation)
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+            Icon(Icons.Default.Add, contentDescription = "New Chat", tint = Color.White)
         }
     }
 }
@@ -83,32 +139,47 @@ fun ChatbotScreen(mainNavController: NavHostController) {
 @Composable
 fun ConversationHistoryCard(conversation: Conversation) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = conversation.title,
-                style = MaterialTheme.typography.titleMedium,
-                color = Color(0xFF333333) // Dark text
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = conversation.preview,
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFF666666) // Medium dark text
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = conversation.timestamp,
-                style = MaterialTheme.typography.labelSmall,
-                color = Color(0xFF999999) // Light text
-            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = conversation.title,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF2C3E50)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = conversation.preview,
+                    fontSize = 14.sp,
+                    color = Color(0xFF7F8C8D),
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = conversation.timestamp,
+                    fontSize = 12.sp,
+                    color = Color(0xFFBDC3C7)
+                )
+            }
         }
     }
 }
