@@ -1,50 +1,35 @@
 package com.example.mentalhealthapp.presentation.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.R
-import androidx.compose.ui.text.style.TextAlign
 import com.example.mentalhealthapp.presentation.Navigation.Route
-
+import kotlinx.coroutines.launch
 
 data class Task(
     val title: String,
@@ -56,15 +41,21 @@ enum class TaskPriority {
     HIGH, MEDIUM, LOW
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+data class MoodItem(
+    val imageResId: Int,
+    val moodName: String,
+    val backgroundColor: Color
+)
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeContentScreen(navController: NavHostController, mainNavController: NavHostController) {
     val tasks = remember {
         mutableStateListOf(
-            Task("Take medicine", "9:00 AM", TaskPriority.HIGH),
-            Task("Meditation", "10:00 AM", TaskPriority.MEDIUM),
-            Task("Exercise", "11:00 AM", TaskPriority.LOW),
-            Task("Walk dog", "4:00 PM", TaskPriority.MEDIUM)
+            Task("Take medicine", "Today at 9:00 AM", TaskPriority.HIGH),
+            Task("Meditation", "Today at 10:00 AM", TaskPriority.MEDIUM),
+            Task("Exercise", "Today at 11:00 AM", TaskPriority.LOW),
+            Task("Walk dog", "Today at 4:00 PM", TaskPriority.MEDIUM)
         )
     }
 
@@ -75,70 +66,130 @@ fun HomeContentScreen(navController: NavHostController, mainNavController: NavHo
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-
-
         item {
-            Text(
-                text = "Daily Tasks",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 24.dp)
-            )
-        }
-
-        items(tasks.size) { index ->
-            TaskItem(tasks[index])
-        }
-
-        item {
-            ElevatedCard(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFFFE4E1)
-                ),
-                shape = RoundedCornerShape(16.dp)
+                    .background(Color(0xFFE6E6FA), shape = RoundedCornerShape(16.dp))
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "How are you feeling?",
+                        text = "Today's Tasks",
                         style = MaterialTheme.typography.titleLarge,
-                        textAlign = TextAlign.Center
+                        fontWeight = FontWeight.Bold
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_chatbot),
-                        contentDescription = null,
-                        modifier = Modifier.size(80.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                    IconButton(
+                        onClick = { },
+                        modifier = Modifier
+                            .size(32.dp)
+                            .background(Color.White, shape = CircleShape)
                     ) {
-                        listOf("😊", "🙂", "😐", "😔", "😰").forEach { emoji ->
-                            Box(
-                                modifier = Modifier
-                                    .size(45.dp)
-                                    .background(Color.White, CircleShape)
-                                    .clickable { },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = emoji,
-                                    fontSize = 20.sp
-                                )
-                            }
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add Task",
+                            tint = Color.Black
+                        )
+                    }
+                }
+
+                tasks.forEach { task ->
+                    TaskItem(task)
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+
+        item {
+            val moods = listOf(
+                MoodItem(R.drawable.mood_good, "Good", Color(0xFFFFC107)),
+                MoodItem(R.drawable.mood_upset, "Upset", Color(0xFF3F51B5)),
+                MoodItem(R.drawable.mood_angry, "Angry", Color(0xFFFF5722)),
+                MoodItem(R.drawable.mood_sad, "Sad", Color(0xFF00BCD4)),
+                MoodItem(R.drawable.mood_happy, "Happy", Color(0xFF4CAF50)),
+                MoodItem(R.drawable.mood_spectacular, "Spectacular", Color(0xFFE91E63))
+            )
+
+            var selectedMood by remember { mutableStateOf(moods[0]) }
+            val pagerState = rememberPagerState(pageCount = { moods.size })
+            val coroutineScope = rememberCoroutineScope()
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "How are you feeling today?",
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                ) { page ->
+                    val mood = moods[page]
+                    val scale by animateFloatAsState(
+                        targetValue = if (pagerState.currentPage == page) 1.1f else 1f,
+                        label = "Mood Scale"
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp)
+                            .scale(scale)
+                            .clickable { selectedMood = mood },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = mood.imageResId),
+                            contentDescription = mood.moodName,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(24.dp),
+                            contentScale = ContentScale.Fit
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                MoodSelectionDots(
+                    pagerState = pagerState,
+                    moods = moods,
+                    onDotClick = { index ->
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
                         }
                     }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = { /* Handle mood selection */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+
+                ) {
+                    Text(
+                        text = "I'm feeling ${selectedMood.moodName}",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
                 }
             }
         }
@@ -163,51 +214,74 @@ fun HomeContentScreen(navController: NavHostController, mainNavController: NavHo
 
 @Composable
 fun TaskItem(task: Task) {
-    Card(
+    Row(
         modifier = Modifier
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = when (task.priority) {
-                TaskPriority.HIGH -> Color(0xFFFFEBEE)
-                TaskPriority.MEDIUM -> Color(0xFFF5F5F5)
-                TaskPriority.LOW -> Color(0xFFFFFDE7)
-            }
-        ),
-        shape = RoundedCornerShape(12.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(
+                when (task.priority) {
+                    TaskPriority.HIGH -> Color(0xFFFFA07A)
+                    TaskPriority.MEDIUM -> Color(0xFF98FB98)
+                    TaskPriority.LOW -> Color(0xFFFFA500)
+                },
+                shape = RoundedCornerShape(12.dp)
+            )
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = task.title,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
-                )
-                Text(
-                    text = task.time,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
-                )
-            }
-            Checkbox(
-                checked = false,
-                onCheckedChange = { },
-                colors = CheckboxDefaults.colors(
-                    checkedColor = MaterialTheme.colorScheme.primary,
-                    uncheckedColor = Color.Gray
-                )
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = task.title,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Text(
+                text = task.time,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.DarkGray
+            )
+        }
+        Icon(
+            imageVector = Icons.Default.Star,
+            contentDescription = "Priority",
+            tint = Color.White,
+            modifier = Modifier.size(24.dp)
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun MoodSelectionDots(
+    pagerState: androidx.compose.foundation.pager.PagerState,
+    moods: List<MoodItem>,
+    onDotClick: (Int) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        moods.forEachIndexed { index, mood ->
+            val scale by animateFloatAsState(
+                targetValue = if (pagerState.currentPage == index) 1.5f else 1f,
+                label = "Dot Scale"
+            )
+
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp)
+                    .size(if (pagerState.currentPage == index) 16.dp else 12.dp)
+                    .background(
+                        color = mood.backgroundColor,
+                        shape = CircleShape
+                    )
+                    .scale(scale)
+                    .clickable { onDotClick(index) }
             )
         }
     }
 }
-
-/*
-* @OptIn(ExperimentalMaterial3Api::class)
-
-* */
-
