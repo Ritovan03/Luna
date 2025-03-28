@@ -22,7 +22,7 @@ import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
 import com.example.mentalhealthapp.presentation.auth.TodoListScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
 import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
-import com.example.mentalhealthapp.presentation.home.AnxietyScreen
+
 
 import com.example.mentalhealthapp.presentation.home.HomeScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
