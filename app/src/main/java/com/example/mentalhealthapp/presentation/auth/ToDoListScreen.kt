@@ -35,10 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.mentalhealthapp.domain.model.Todo
 @Composable
 fun TodoListScreen(
     viewModel: ToDoViewModel,
+    mainNavController: NavHostController
 ) {
     val todoState by viewModel.todoState.collectAsState()
     var taskText by remember { mutableStateOf("") }

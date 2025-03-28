@@ -109,7 +109,7 @@ fun WelcomeScreen4(navController: NavHostController){
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Progress Indicator (Optional)
+                // WelcomeScreen4
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.6f)
@@ -118,7 +118,7 @@ fun WelcomeScreen4(navController: NavHostController){
                 ) {
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.3f)
+                            .fillMaxWidth(0.667f) // 4/6 progress
                             .height(4.dp)
                             .background(Color(0xFF57341C), shape = RoundedCornerShape(50))
                     )

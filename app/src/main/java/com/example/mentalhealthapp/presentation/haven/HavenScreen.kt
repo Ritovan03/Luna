@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp.presentation.haven
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
 import com.example.mentalhealthapp.ui.theme.UrbanistFont
@@ -46,7 +48,8 @@ import com.example.mentalhealthapp.ui.theme.UrbanistFont
  * Contains interactive buttons for different features and curated articles.
  */
 @Composable
-fun HavenScreen(navController: NavHostController) {
+fun HavenScreen(navController: NavHostController,
+                mainNavController: NavHostController) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = PaddingValues(bottom = 16.dp),
@@ -78,7 +81,7 @@ fun HavenScreen(navController: NavHostController) {
                 title = "To-do List",
                 imagePainter = painterResource(R.drawable.todo_list_btn),
                 onClick = {
-                    navController.navigate(Route.Todo.route)
+                    mainNavController.navigate(Route.Todo.route)
                 }
             )
         }
@@ -226,7 +229,7 @@ fun ArticleCard(
         colors = CardDefaults.cardColors(
             containerColor = article.backgroundColor
         ),
-        border = androidx.compose.foundation.BorderStroke(
+        border = BorderStroke(
             width = 1.dp,
             color = Color.Black
         )
@@ -284,6 +287,8 @@ fun dummyArticles() = listOf(
 @Preview(showBackground = true)
 @Composable
 fun HavenScreenPreview() {
-    val navController = androidx.navigation.compose.rememberNavController()
-    HavenScreen(navController = navController)
+    val navController = rememberNavController()
+    HavenScreen(
+        navController = navController, mainNavController = navController,
+    )
 }

@@ -105,7 +105,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Quiz15.route) { QuizScreen15(navController) }
 
         composable(Route.Home.route) { HomeScreen(navController) }
-        composable(Route.Haven.route) { HavenScreen(navController) }
+        //composable(Route.Haven.route) { HavenScreen(navController,) }
 
         composable(Route.Anxiety.route) { AnxietyScreen(navController) }
 
@@ -118,10 +118,10 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Todo.route) { ToDoScreen(navController) }
 
 
-        composable(Route.Todo.route) {
-            val viewModel: ToDoViewModel = hiltViewModel()
-            TodoListScreen(viewModel)
-        }
+//        composable(Route.Todo.route) {
+//            val viewModel: ToDoViewModel = hiltViewModel()
+//            TodoListScreen(viewModel, navController)
+//        }
     }
 }
 

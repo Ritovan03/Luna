@@ -46,11 +46,5 @@ sealed class Route(
   object Profile: Route("profile_screen")
   object Chat: Route("chat")
 
-
-
-
-
-
-
     object Todo : Route("todo")
 }

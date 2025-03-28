@@ -94,8 +94,8 @@ fun ProfileScreen(navController: NavHostController) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileContent(modifier: Modifier) {
-    var name by remember { mutableStateOf("John Doe") }
-    var email by remember { mutableStateOf("john.doe@example.com") }
+    var name by remember { mutableStateOf("Shyam Modi") }
+    var email by remember { mutableStateOf("modi2001@gmail.com") }
     var password by remember { mutableStateOf("••••••••") }
     var passwordVisible by remember { mutableStateOf(false) }
     var notificationsEnabled by remember { mutableStateOf(true) }

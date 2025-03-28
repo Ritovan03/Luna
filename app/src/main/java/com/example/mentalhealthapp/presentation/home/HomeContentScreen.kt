@@ -107,13 +107,30 @@ fun HomeContentScreen(navController: NavHostController, mainNavController: NavHo
         }
 
         item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clickable { mainNavController.navigate(Route.Anxiety.route) }
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.anxious_home),
+                    contentDescription = "Feeling Anxious Button",
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth
+                )
+            }
+        }
+
+
+        item {
             val moods = listOf(
-                MoodItem(R.drawable.mood_good, "Good", Color(0xFFFFC107)),
-                MoodItem(R.drawable.mood_upset, "Upset", Color(0xFF3F51B5)),
-                MoodItem(R.drawable.mood_angry, "Angry", Color(0xFFFF5722)),
-                MoodItem(R.drawable.mood_sad, "Sad", Color(0xFF00BCD4)),
-                MoodItem(R.drawable.mood_happy, "Happy", Color(0xFF4CAF50)),
-                MoodItem(R.drawable.mood_spectacular, "Spectacular", Color(0xFFE91E63))
+                MoodItem(R.drawable.mood_good, "Good", Color(0xFFFFDD6F)),
+                MoodItem(R.drawable.mood_upset, "Upset", Color(0xFF8CA4EE)),
+                MoodItem(R.drawable.mood_angry, "Angry", Color(0xFFFF843E)),
+                MoodItem(R.drawable.mood_sad, "Sad", Color(0xFFA1E7EB)),
+                MoodItem(R.drawable.mood_happy, "Happy", Color(0xFFDFEBFF)),
+                MoodItem(R.drawable.mood_spectacular, "Spectacular", Color(0xFFFFA7BC))
             )
 
             var selectedMood by remember { mutableStateOf(moods[0]) }
@@ -121,26 +138,20 @@ fun HomeContentScreen(navController: NavHostController, mainNavController: NavHo
             val coroutineScope = rememberCoroutineScope()
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "How are you feeling today?",
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
                 HorizontalPager(
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(250.dp)
                 ) { page ->
                     val mood = moods[page]
                     val scale by animateFloatAsState(
-                        targetValue = if (pagerState.currentPage == page) 1.1f else 1f,
+                        targetValue = if (pagerState.currentPage == page) 1.2f else 1f,
                         label = "Mood Scale"
                     )
 
@@ -157,7 +168,7 @@ fun HomeContentScreen(navController: NavHostController, mainNavController: NavHo
                             contentDescription = mood.moodName,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(24.dp),
+                                .padding(16.dp),
                             contentScale = ContentScale.Fit
                         )
                     }
@@ -182,72 +193,79 @@ fun HomeContentScreen(navController: NavHostController, mainNavController: NavHo
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-
+                    colors = ButtonDefaults.buttonColors(containerColor = selectedMood.backgroundColor)
                 ) {
                     Text(
                         text = "I'm feeling ${selectedMood.moodName}",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = selectedMood.backgroundColor
                     )
                 }
             }
         }
 
-        item {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clickable { mainNavController.navigate(Route.Anxiety.route) }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.anxious_home),
-                    contentDescription = "Feeling Anxious Button",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
-                )
-            }
-        }
     }
 }
 
+
 @Composable
 fun TaskItem(task: Task) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(
-                when (task.priority) {
-                    TaskPriority.HIGH -> Color(0xFFFFA07A)
-                    TaskPriority.MEDIUM -> Color(0xFF98FB98)
-                    TaskPriority.LOW -> Color(0xFFFFA500)
-                },
-                shape = RoundedCornerShape(12.dp)
-            )
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        shape = RoundedCornerShape(10.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = task.title,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Text(
-                text = task.time,
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.DarkGray
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .background(
+                            when (task.priority) {
+                                TaskPriority.HIGH -> Color(0xFFFF6B6B)
+                                TaskPriority.MEDIUM -> Color(0xFF4ECDC4)
+                                TaskPriority.LOW -> Color(0xFFFFD93D)
+                            },
+                            CircleShape
+                        )
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                    Text(
+                        text = task.title,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        text = task.time,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Gray
+                    )
+                }
+            }
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+                tint = when (task.priority) {
+                    TaskPriority.HIGH -> Color(0xFFFF6B6B)
+                    TaskPriority.MEDIUM -> Color(0xFF4ECDC4)
+                    TaskPriority.LOW -> Color(0xFFFFD93D)
+                }
             )
         }
-        Icon(
-            imageVector = Icons.Default.Star,
-            contentDescription = "Priority",
-            tint = Color.White,
-            modifier = Modifier.size(24.dp)
-        )
     }
 }
 

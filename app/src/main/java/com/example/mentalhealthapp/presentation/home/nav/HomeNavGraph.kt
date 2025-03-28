@@ -17,7 +17,7 @@ fun HomeNavGraph(navController: NavHostController , mainNavController: NavHostCo
         startDestination = BottomNavItem.Home.route
     ) {
         composable(BottomNavItem.Home.route) { HomeContentScreen(navController,mainNavController) }
-        composable(BottomNavItem.Tools.route) { HavenScreen(navController) }
+        composable(BottomNavItem.Tools.route) { HavenScreen(navController,mainNavController) }
         composable(BottomNavItem.Community.route) { CommunityScreen(navController) }
         composable(BottomNavItem.Profile.route) { ProfileScreen(navController) }
         composable(BottomNavItem.Chatbot.route) { ChatbotScreen(mainNavController) }
