@@ -21,7 +21,6 @@ import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
 import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
 import com.example.mentalhealthapp.presentation.auth.TodoListScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
-import com.example.mentalhealthapp.presentation.haven.govt.SensoryTherapyScreen1
 import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
 
 
@@ -117,7 +116,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Chat.route) { ChatScreen(navController) }
 
         composable(Route.Todo.route) { ToDoScreen(navController) }
-        composable(Route.SensoryTherapy.route) { SensoryTherapyScreen1(navController) }
+
 
 
 //        composable(Route.Todo.route) {
