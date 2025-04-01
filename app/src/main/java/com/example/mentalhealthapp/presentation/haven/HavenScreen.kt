@@ -100,7 +100,9 @@ fun HavenScreen(navController: NavHostController,
             ImageButton(
                 title = "      Government\n Schemes & Support",
                 imagePainter = painterResource(R.drawable.govt_schemes_btn),
-                onClick = {}
+                onClick = {
+                    mainNavController.navigate(Route.GovtProgram.route)
+                }
             )
         }
 
