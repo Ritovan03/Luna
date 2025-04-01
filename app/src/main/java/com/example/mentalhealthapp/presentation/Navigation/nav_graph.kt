@@ -15,12 +15,20 @@ import com.example.mentalhealthapp.presentation.auth.SignupScreen
 
 import com.example.mentalhealthapp.presentation.chatbot.ChatScreen
 import com.example.mentalhealthapp.presentation.chatbot.ChatbotScreen
-import com.example.mentalhealthapp.presentation.haven.HavenScreen
+import com.example.mentalhealthapp.presentation.haven.govt.GovtProgramScreen
 import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
+
+
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen1
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen2
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen3
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen4
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen5
 
 import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
 import com.example.mentalhealthapp.presentation.auth.TodoListScreen
 import com.example.mentalhealthapp.presentation.haven.HavenScreen
+
 import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
 
 
@@ -48,8 +56,6 @@ import com.example.mentalhealthapp.presentation.quiz.QuizScreen6
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen7
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen8
 import com.example.mentalhealthapp.presentation.quiz.QuizScreen9
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 
 //@Composable
 //fun Navigation(startDestination : String){
@@ -117,14 +123,18 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(Route.Todo.route) { ToDoScreen(navController) }
 
+        composable(Route.SensoryTherapy.route) { SensoryTherapyScreen1(navController) }
+        composable(Route.SensoryTherapy2.route) { SensoryTherapyScreen2(navController) }
+        composable(Route.SensoryTherapy3.route) { SensoryTherapyScreen3(navController) }
+        composable(Route.SensoryTherapy4.route) { SensoryTherapyScreen4(navController) }
+        composable(Route.SensoryTherapy5.route) { SensoryTherapyScreen5(navController) }
 
 
-//        composable(Route.Todo.route) {
-//            val viewModel: ToDoViewModel = hiltViewModel()
-//            TodoListScreen(viewModel, navController)
-//        }
+        composable(Route.GovtProgram.route) { GovtProgramScreen(navController) }
     }
 }
+
+
 
 
 

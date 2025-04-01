@@ -47,6 +47,11 @@ sealed class Route(
   object Chat: Route("chat")
 
     object Todo : Route("todo")
-
     object SensoryTherapy : Route("sensory_therapy")
+    object SensoryTherapy2 : Route("sensory_therapy2")
+    object SensoryTherapy3 : Route("sensory_therapy3")
+    object SensoryTherapy4 : Route("sensory_therapy4")
+    object SensoryTherapy5 : Route("sensory_therapy5")
+
+  object GovtProgram : Route("govt_program")
 }
