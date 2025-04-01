@@ -20,6 +20,9 @@ import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
 
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen1
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen2
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen3
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen4
+import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen5
 import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
 
 
@@ -115,11 +118,16 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         composable(Route.Todo.route) { ToDoScreen(navController) }
         composable(Route.SensoryTherapy.route) { SensoryTherapyScreen1(navController) }
         composable(Route.SensoryTherapy2.route) { SensoryTherapyScreen2(navController) }
+        composable(Route.SensoryTherapy3.route) { SensoryTherapyScreen3(navController) }
+        composable(Route.SensoryTherapy4.route) { SensoryTherapyScreen4(navController) }
+        composable(Route.SensoryTherapy5.route) { SensoryTherapyScreen5(navController) }
 
 
         composable(Route.GovtProgram.route) { GovtProgramScreen(navController) }
     }
 }
+
+
 
 
 

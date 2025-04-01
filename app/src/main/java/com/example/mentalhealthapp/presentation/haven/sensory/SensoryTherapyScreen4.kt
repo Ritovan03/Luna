@@ -1,9 +1,21 @@
 package com.example.mentalhealthapp.presentation.haven.sensory
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -12,13 +24,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.airbnb.lottie.compose.*
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
 
 @Composable
-fun SensoryTherapyScreen2(mainNavController: NavHostController)
-{
+fun SensoryTherapyScreen4(mainNavController: NavHostController) {
     val context = LocalContext.current
     val audioPlayer = remember { SensoryTherapyAudioPlayer(context, R.raw.forest_level1) }
 
@@ -45,7 +60,7 @@ fun SensoryTherapyScreen2(mainNavController: NavHostController)
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Level 2",
+                text = "Level 4",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -68,7 +83,7 @@ fun SensoryTherapyScreen2(mainNavController: NavHostController)
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { mainNavController.navigate(Route.SensoryTherapy3.route) },
+                onClick = { mainNavController.navigate(Route.SensoryTherapy5.route) },
                 modifier = Modifier
                     .padding(bottom = 32.dp)
                     .height(52.dp),
