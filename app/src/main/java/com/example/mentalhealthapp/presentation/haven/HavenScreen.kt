@@ -72,7 +72,9 @@ fun HavenScreen(navController: NavHostController,
             ImageButton(
                 title = "Sensory Therapy",
                 imagePainter = painterResource(R.drawable.sensory_therapy_btn),
-                onClick = {}
+                onClick = {
+                    mainNavController.navigate(Route.SensoryTherapy.route)
+                }
             )
         }
 

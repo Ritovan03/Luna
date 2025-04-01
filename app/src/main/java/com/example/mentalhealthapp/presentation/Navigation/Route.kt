@@ -49,4 +49,5 @@ sealed class Route(
     object Todo : Route("todo")
     object ToDo : Route("todo")
     object SensoryTherapy : Route("sensory_therapy")
+    object SensoryTherapy2 : Route("sensory_therapy2")
 }
