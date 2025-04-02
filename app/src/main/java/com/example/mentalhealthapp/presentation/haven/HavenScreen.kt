@@ -92,7 +92,9 @@ fun HavenScreen(navController: NavHostController,
             ImageButton(
                 title = "Thought Journal",
                 imagePainter = painterResource(R.drawable.thought_journal_btn),
-                onClick = {}
+                onClick = {
+                    mainNavController.navigate(Route.ThoughtJournal.route)
+                }
             )
         }
 

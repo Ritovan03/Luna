@@ -54,4 +54,5 @@ sealed class Route(
     object SensoryTherapy5 : Route("sensory_therapy5")
 
   object GovtProgram : Route("govt_program")
+  object ThoughtJournal : Route("thought_journal")
 }

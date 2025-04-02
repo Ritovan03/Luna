@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp.presentation.Navigation
 
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -12,27 +13,18 @@ import com.example.mentalhealthapp.presentation.auth.ForgotPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.ResetPasswordScreen
 import com.example.mentalhealthapp.presentation.auth.SignInScreen
 import com.example.mentalhealthapp.presentation.auth.SignupScreen
-
 import com.example.mentalhealthapp.presentation.chatbot.ChatScreen
 import com.example.mentalhealthapp.presentation.chatbot.ChatbotScreen
 import com.example.mentalhealthapp.presentation.haven.govt.GovtProgramScreen
-import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
-
-
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen1
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen2
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen3
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen4
 import com.example.mentalhealthapp.presentation.haven.sensory.SensoryTherapyScreen5
-
-import com.example.mentalhealthapp.presentation.auth.ToDoViewModel
-import com.example.mentalhealthapp.presentation.auth.TodoListScreen
-import com.example.mentalhealthapp.presentation.haven.HavenScreen
-
+import com.example.mentalhealthapp.presentation.haven.thought.ThoughtJournalScreen
 import com.example.mentalhealthapp.presentation.haven.to_do.ToDoScreen
-
-
 import com.example.mentalhealthapp.presentation.home.HomeScreen
+import com.example.mentalhealthapp.presentation.home.anxiety.AnxietyScreen
 import com.example.mentalhealthapp.presentation.onboarding.SplashScreen
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen1
 import com.example.mentalhealthapp.presentation.onboarding.WelcomeScreen2
@@ -131,6 +123,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
 
         composable(Route.GovtProgram.route) { GovtProgramScreen(navController) }
+        composable(Route.ThoughtJournal.route) {  ThoughtJournalScreen(navController) }
     }
 }
 

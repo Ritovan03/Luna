@@ -16,7 +16,10 @@
     <color name="blue_200">#FF539DF3</color>
     <color name="orange_Accent_color">#FFED7E1C</color>
     <color name="brown_color">#FF4F3422</color>
+    <color name="brown_color_200">#7C4D2E</color>
     <color name="purple_800">#ff3F2760</color>
     <color name="teal_text_color">#FF21564F</color>
     <color name="community_screen_color">#FFC7E18A</color>
+    <color name="green_color">#FFC7E18A</color>
+    <color name="home_topbar_color">#FF9BB168</color>
 </resources>

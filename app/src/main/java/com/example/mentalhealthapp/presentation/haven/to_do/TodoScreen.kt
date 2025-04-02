@@ -136,13 +136,14 @@ fun ToDoScreen(navController: NavHostController) {
 fun AddTaskFAB(onAddTask: () -> Unit) {
     FloatingActionButton(
         onClick = onAddTask,
-        containerColor = colorResource(R.color.brown),
+        containerColor = colorResource(R.color.community_screen_color),
         contentColor = Color.White,
         shape = CircleShape,
         modifier = Modifier.size(64.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Add,
+            tint = colorResource(R.color.black),
             contentDescription = "Add Task",
             modifier = Modifier.size(32.dp)
         )
@@ -430,8 +431,8 @@ fun SortOptionsRow(
                         count = SortOption.values().size
                     ),
                     colors = SegmentedButtonDefaults.colors(
-                        activeContainerColor = colorResource(R.color.brown),
-                        activeContentColor = Color.White,
+                        activeContainerColor = colorResource(R.color.community_screen_color),
+                        activeContentColor = Color.Black,
                         inactiveContainerColor = Color.Transparent,
                         inactiveContentColor = colorResource(R.color.brown)
                     ),

@@ -1,18 +1,35 @@
 package com.example.mentalhealthapp.presentation.haven.sensory
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.airbnb.lottie.compose.*
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.presentation.Navigation.Route
 
@@ -33,7 +50,7 @@ fun SensoryTherapyScreen1(mainNavController: NavHostController)
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF90EE90))
+            .background(color = colorResource(R.color.teal_700))
     ) {
         Column(
             modifier = Modifier
@@ -46,9 +63,16 @@ fun SensoryTherapyScreen1(mainNavController: NavHostController)
 
             Text(
                 text = "Level 1",
-                fontSize = 28.sp,
+                fontSize = 36.sp,  // Increased from 28.sp to make it bigger
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White  // Slightly greener than white
+            )
+            Text(
+                text = "Birds chirping in a forest.\nTake a moment to relax and feel calm in this environment, once you feel ready, click the button below to proceed to next level",
+                fontSize = 18.sp,  // Reduced from 28.sp to make it smaller
+                fontWeight = FontWeight.Medium,  // Changed from Bold to Medium for the description
+                color = Color.White,  // Light green color
+                lineHeight = 24.sp  // Added for better readability
             )
 
             val composition by rememberLottieComposition(
@@ -59,11 +83,20 @@ fun SensoryTherapyScreen1(mainNavController: NavHostController)
                 iterations = LottieConstants.IterateForever
             )
 
-            LottieAnimation(
-                composition = composition,
-                progress = { progress },
-                modifier = Modifier.size(360.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .height(300.dp)  // Fixed height container
+                    .padding(vertical = 8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                LottieAnimation(
+                    composition = composition,
+                    progress = { progress },
+                    modifier = Modifier
+                        .size(280.dp)  // Slightly smaller to ensure it fits in the box
+                        .align(Alignment.Center)
+                )
+            }
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -74,7 +107,7 @@ fun SensoryTherapyScreen1(mainNavController: NavHostController)
                     .height(52.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
-                    contentColor = Color(0xFF90EE90)
+                    contentColor =colorResource(R.color.teal_700)  // Changed to teal_700 for better contrast
                 )
             ) {
                 Text(

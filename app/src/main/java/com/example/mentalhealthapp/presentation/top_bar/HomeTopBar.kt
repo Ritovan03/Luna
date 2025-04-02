@@ -20,13 +20,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +34,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mentalhealthapp.R
@@ -47,8 +44,8 @@ import com.example.mentalhealthapp.R
 @Composable
 fun HomeTopBar() {
     DailyStreakTopBar(
-        date = "Sat, 23 February 2025",
-        username = "Shyam",
+        date = "Fri, 28 March 2025",
+        username = "Yagyansh",
         xp = 90,
         mood = "Happy",
         streakDays = 3,
@@ -72,9 +69,9 @@ fun DailyStreakTopBar(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
-            .background(colorResource(R.color.HomeScreen_primary_scaffold_color))
+            .background(colorResource(R.color.home_topbar_color))
             .padding(top = statusBarHeight)
-            .padding(end=16.dp, start = 16.dp, bottom = 16.dp)
+            .padding(end = 16.dp, start = 16.dp, bottom = 16.dp)
     ) {
         Column {
             // Date and Notification in the same row
@@ -116,39 +113,9 @@ private fun DateDisplay(date: String) {
     Text(
         text = date,
         fontSize = 16.sp,
-        color = Color.Black,
+        color = colorResource(R.color.brown),
         modifier = Modifier.padding(top = 8.dp) // Add top padding to align with notification
     )
-}
-// User Info Component
-@Composable
-private fun UserInfoRow(
-    username: String,
-    xp: Int,
-    mood: String,
-    streakDays: Int
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            ProfileImage()
-
-            UserStats(
-                username = username,
-                xp = xp,
-                mood = mood,
-                streakDays = streakDays
-            )
-        }
-
-        NotificationButton()
-    }
 }
 
 // Profile Image Component
@@ -159,7 +126,7 @@ private fun ProfileImage() {
         contentDescription = "Profile Picture",
         modifier = Modifier
             .size(48.dp)
-            .border(width = 1.dp, color = Color.Black, shape = CircleShape)
+            .border(width = 1.dp, color = colorResource(R.color.brown), shape = CircleShape)
             .clip(CircleShape),
         contentScale = ContentScale.Crop
     )
@@ -178,7 +145,7 @@ private fun UserStats(
             text = "Hi, $username!",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = colorResource(R.color.black)
         )
 
         Row(
@@ -221,7 +188,7 @@ private fun StatItem(
         Text(
             text = text,
             fontSize = 14.sp,
-            color = Color.Black
+            color = colorResource(R.color.black)
         )
     }
 }
@@ -231,17 +198,18 @@ private fun StatItem(
 private fun NotificationButton() {
     Box(
         modifier = Modifier
-            .padding(top = 12.dp,end=6.dp) // Add top padding to position slightly lower
+            .padding(top = 12.dp, end = 6.dp) // Add top padding to position slightly lower
             .size(42.dp)
+            .border(width = 1.dp, color = Color.Black, shape = CircleShape)
             .clip(CircleShape)
-            .background(colorResource(R.color.HomeScreen_primary_variant_scaffold_color)),
+            .background(colorResource(R.color.brown_color)),
         contentAlignment = Alignment.Center
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_notification),
             contentDescription = "Notifications",
             modifier = Modifier.fillMaxSize(),
-            tint = Color.Black
+            tint = colorResource(R.color.white)
         )
     }
 }
@@ -258,7 +226,7 @@ private fun QuoteOfTheDay(quote: String) {
                 spotColor = Color.Black.copy(alpha = 0.25f)
             )
             .clip(RoundedCornerShape(16.dp))
-            .background(colorResource(R.color.HomeScreen_primary_variant_scaffold_color))
+            .background(colorResource(R.color.brown_color))
             .padding(16.dp)
     ) {
         Column(
@@ -272,7 +240,7 @@ private fun QuoteOfTheDay(quote: String) {
             Text(
                 text = quote,
                 fontSize = 16.sp,
-                color = Color.Black,
+                color = colorResource(R.color.white),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -291,14 +259,20 @@ private fun QuoteHeader() {
             text = "Quote of the day",
             fontSize = 18.sp,
             fontWeight = FontWeight.Medium,
-            color = Color.Black
+            color = colorResource(R.color.white)
         )
 
         Icon(
             imageVector = Icons.Default.Favorite,
             contentDescription = "heart",
-            tint = colorResource(R.color.teal_700),
+            tint = colorResource(R.color.orange_Accent_color),
             modifier = Modifier.size(16.dp)
         )
     }
+}
+
+@Preview
+@Composable
+fun HomeTopBarPreview() {
+    HomeTopBar()
 }
