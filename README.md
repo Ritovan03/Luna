@@ -69,25 +69,34 @@ Luna offers a **personalized AI-powered support system** that adapts to the user
 
 ---
 
-## 🛠️ Tech Stack  
 
-| Technology  | Usage  | Icon  |  
-|------------|--------|------|  
-| **Kotlin**  | Android App Development  | ![Kotlin](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg)  |  
-| **Firebase**  | Backend & Authentication  | ![Firebase](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg)  |  
-| **Google Gemini AI**  | AI-based Assistance  | 🧠  |  
-| **Jetpack Compose**  | Modern UI Framework  | 🏗️  |  
-| **MongoDB**  | NoSQL Database  | ![MongoDB](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg)  |  
-| **Retrofit**  | API Calls  | 🔗  |  
-| **Figma / Adobe XD**  | UI/UX Design  | 🎨  |  
+
+
+
+## 🛠️ Tech Stack
+
+The following technologies are used in Luna:
+
+| Technology                    | Description                                                  | Icon |
+|-------------------------------|--------------------------------------------------------------|------|
+| **Kotlin**                    | Programming language for Android development                 | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg" width="40" height="40"> |
+| **Android Studio**            | Native Android development IDE                               | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/androidstudio/androidstudio-original.svg" width="40" height="40"> |
+| **Jetpack Compose**           | Modern UI toolkit for building the app's interface           | <img src="https://github.com/user-attachments/assets/9a48df2e-b0b5-4e0d-81e5-06cce88d0ca0" width="40" height="40"> |
+| **Firebase Firestore**        | Cloud-based real-time database for user and app data         | <img src="https://github.com/user-attachments/assets/eb438725-f96b-426e-8f5a-55d32b869f8c" width="40" height="40"> |
+| **Firebase Auth**             | Secure user authentication using OAuth                       | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain.svg" width="40" height="40"> |
+| **Google Gemini AI**          | AI-driven personalization and conversational support         | <img src="https://github.com/user-attachments/assets/1416a206-d6c7-4baf-b65b-dbbf844aa878" width="90" height="40"> |
+| **Google Cloud Platform**     | Cloud services for AI, storage, and backend support         | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/googlecloud/googlecloud-original.svg" width="40" height="40"> |
+| **Firebase Cloud Functions**  | Serverless backend processing and integration               | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain.svg" width="40" height="40"> |
+
+
+
 
 ---
 
 ## 🎥 Demo Video  
-🎬 Watch the full demo: [YouTube Link](https://your-youtube-link.com)  
-
-📱 Download APK: [APK Link](https://your-apk-link.com)  
-📄 Presentation: [Canva PPT](https://your-canva-link.com)  
+🎬 Watch the full demo: [YouTube Link](https://www.youtube.com/watch?v=bhf4C3L1RqY)  
+📱 Download APK: [APK Link](https://drive.google.com/file/d/1aXtMG5Od_LN5Zq1pffbo4-4DYvYkQsFa/view?usp=sharing)  
+📄 Presentation: [Canva PPT](https://www.canva.com/design/DAGivfxWJ1A/zm_mpGTstFaBjUmv3ctbYA/view?utm_content=DAGivfxWJ1A&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3bd3ce9968)  
 
 ---
 
