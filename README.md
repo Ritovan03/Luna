@@ -42,13 +42,26 @@ Luna offers a **personalized AI-powered support system** that adapts to the user
   4️⃣ **Crowded events**  
   5️⃣ **High-noise environments**  
 
-### 🤖 AI Therapist Chatbot  
+### 🤖 Luna AI Companion  
 - Provides **conversational therapy** for stress relief and emotional support.  
 - Integrated with **mood tracking and journaling**.  
 
-### 📊 Stress Level & Mood Tracking  
+### 📜 Thought Journal  
+- **Write & express** emotions, gratitude, and thoughts.  
+- **AI-powered insights** to analyze emotional patterns.  
+
+### ⏳ Task Scheduler  
+- Helps users **plan their day**, manage responsibilities, and set reminders.  
+
+### 🔵 Instant Calm Relief Button  
+- Immediate access to **guided breathing, meditation, and relaxing sounds**.  
+
+### 📊 Mood Tracker  
 - Real-time **stress level assessment** with AI-driven recommendations.  
 - Helps users **understand emotional patterns** and triggers.  
+
+### 📚 Government Schemes & Support  
+- Provides information on **financial aid, scholarships, and job opportunities** for neurodivergent individuals.  
 
 ### 💡 Community & Resources  
 - **Support groups & discussions** with neurodivergent individuals.  
@@ -57,10 +70,24 @@ Luna offers a **personalized AI-powered support system** that adapts to the user
 ---
 
 ## 🛠️ Tech Stack  
-- **Language:** Kotlin (Native Android)  
-- **AI Model:** Google Gemini  
-- **Backend:** Firebase (user data & analytics)  
-- **UI Design:** Figma / Adobe XD  
+
+| Technology  | Usage  | Icon  |  
+|------------|--------|------|  
+| **Kotlin**  | Android App Development  | ![Kotlin](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg)  |  
+| **Firebase**  | Backend & Authentication  | ![Firebase](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg)  |  
+| **Google Gemini AI**  | AI-based Assistance  | 🧠  |  
+| **Jetpack Compose**  | Modern UI Framework  | 🏗️  |  
+| **MongoDB**  | NoSQL Database  | ![MongoDB](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg)  |  
+| **Retrofit**  | API Calls  | 🔗  |  
+| **Figma / Adobe XD**  | UI/UX Design  | 🎨  |  
+
+---
+
+## 🎥 Demo Video  
+🎬 Watch the full demo: [YouTube Link](https://your-youtube-link.com)  
+
+📱 Download APK: [APK Link](https://your-apk-link.com)  
+📄 Presentation: [Canva PPT](https://your-canva-link.com)  
 
 ---
 
@@ -73,13 +100,13 @@ Luna offers a **personalized AI-powered support system** that adapts to the user
 
 ## 🏆 Contributors  
 - **Ritovan Dasgupta**  
-- **Vedant Maske** 
+- **Vedant Maske**  
 - **Yagyansh Gupta**  
-- **Pavan karthik** 
+- **Pavan Karthik**  
 
 ---
 
 ## 📜 License  
 This project is **open-source** under the **MIT License**.  
 
-🔹 *Luna aims to create a world where neurodiverse individuals feel empowered, supported, and independent.*  
+🔹 *Luna aims to create a world where neurodivergent individuals feel empowered, supported, and independent.*  
